@@ -2,8 +2,8 @@
 \contentsline {myequations}{\numberline {2.2}Two DOF Linear Equation of Motion 2}{6}{equation.2.2}%
 \contentsline {myequations}{\numberline {2.3}Two DOF Linear Equation of Motion 3}{6}{equation.2.3}%
 \contentsline {myequations}{\numberline {2.4}Two DOF Linear Equation of Motion 4}{6}{equation.2.4}%
-\contentsline {myequations}{\numberline {2.5}Transfer Function: How Elevatorr Deflection Impacts Pitch Rate}{7}{equation.2.5}%
-\contentsline {myequations}{\numberline {2.6}Transfer Function: How Elevatorr Deflection Impacts Pitch Angle}{7}{equation.2.6}%
+\contentsline {myequations}{\numberline {2.5}Transfer Function: How Elevator Deflection Impacts Pitch Rate}{7}{equation.2.5}%
+\contentsline {myequations}{\numberline {2.6}Transfer Function: How Elevator Deflection Impacts Pitch Angle}{7}{equation.2.6}%
 \contentsline {myequations}{\numberline {2.7}Transfer Function: How Pitch Angle Impacts Altitude}{7}{equation.2.7}%
 \contentsline {myequations}{\numberline {2.8}Complex Number $s_1$}{8}{equation.2.8}%
 \contentsline {myequations}{\numberline {2.9}$\sigma $ In Terms of $\zeta $ and $\omega _n$}{8}{equation.2.9}%
@@ -13,3 +13,11 @@
 \contentsline {myequations}{\numberline {2.13}Equation for gain $K_q$}{9}{equation.2.13}%
 \contentsline {myequations}{\numberline {2.14}Equation for gain $K_{\theta }$}{9}{equation.2.14}%
 \contentsline {myequations}{\numberline {2.15}Transfer Function $G^{\theta }_{\theta _{ref}}$ - CLTF of pitch attitude system.}{9}{equation.2.15}%
+\contentsline {myequations}{\numberline {2.16}Transfer Function $G_2$ - OLTF of pitch attitude system.}{10}{equation.2.16}%
+\contentsline {myequations}{\numberline {2.17}Transfer Function $G^{\prime }$}{10}{equation.2.17}%
+\contentsline {myequations}{\numberline {2.18}Transfer Function $G^{*}$}{10}{equation.2.18}%
+\contentsline {myequations}{\numberline {2.19}Transfer Function $G_{alt}$}{11}{equation.2.19}%
+\contentsline {myequations}{\numberline {2.20}Expression for finding $b_1$}{11}{equation.2.20}%
+\contentsline {myequations}{\numberline {2.21}Expression for finding $K_h^{\prime }$}{11}{equation.2.21}%
+\contentsline {myequations}{\numberline {2.22}Expression for finding $K_h$}{11}{equation.2.22}%
+\contentsline {myequations}{\numberline {2.23}Closed loop transfer function of the altitude hold system.}{12}{equation.2.23}%

@@ -495,17 +495,6 @@ INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmri7
 OUTPUT main.toc
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmb8t.vf
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmb8r.tfm
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt10.tfm
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8t.tfm
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8t.tfm
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtk10.tfm
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmr8t.vf
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.tfm
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-ec.enc
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmbi8t.tfm
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmbi8t.vf
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmbi8r.tfm
@@ -547,6 +536,13 @@ INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmri8
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\zptmcm7y.vf
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
 INPUT C:\Users\Philip\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs10.tfm
+INPUT .\pictures\figure 2.2.jpg
+INPUT .\pictures\figure 2.2.jpg
+INPUT .\pictures\figure 2.2.jpg
+INPUT .\pictures\figure 2.2.jpg
+INPUT .\pictures\figure 2.2.jpg
+INPUT .\pictures\figure 2.2.jpg
+INPUT .\pictures\figure 2.2.jpg
 INPUT .\main.lof
 INPUT .\main.lof
 INPUT main.lof
@@ -574,10 +570,6 @@ INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtk10.pfb
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtk10.pfb
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt10.pfb
-INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt10.pfb
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\urw\symbol\usyr.pfb
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\urw\symbol\usyr.pfb
 INPUT C:\Users\Philip\AppData\Local\Programs\MiKTeX\fonts\type1\urw\times\utmb8a.pfb

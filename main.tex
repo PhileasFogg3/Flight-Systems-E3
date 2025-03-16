@@ -82,21 +82,6 @@
 \newpage
 \section{Digital Control Design Laboratory}
 Introduction
-
-\begin{lstlisting}[language=Matlab]
-    %%% Stability and Control Derivatives %%%
-function [Xu, Zu, Mu, Xw, Zw, Mw, Xw_dot, Zw_dot, Mw_dot, Xq, Zq, Mq, Xeta, Zeta, Meta, VR, g] = final_assignment_variables()
-    Xu = -1.58E-02;    Zu = -1.442E-01;    Mu = -1.3442E-04;
-    Xw_dot = 0;        Zw_dot = -2.2E-03;  Mw_dot = -2.0483E-04;
-    Xw = 3.79E-03;     Zw = -8.73E-01;     Mw = -6.0107E-03;
-    Xq = 0;            Zq = 0;             Mq = -9.88E-01;
-    Xeta = 0;          Zeta = -1.2408E+01;  Meta = -1.153E+01;
-    
-    VR = 236; g = 9.8100;
-
-end
-%%% END OF VARIABLES %%%
-\end{lstlisting}
 \subsection{Objectives, Theory, Apparatus}
 \subsection{Models and Results}
 \subsection{Discussion}
@@ -149,26 +134,26 @@ The altitude hold system is modelled using the two degrees of freedom linear equ
 \label{eq:2.4}
 \myequations{Two DOF Linear Equation of Motion 4}
 
-These equations describe how the aircraft’s vertical velocity (w), pitch rate (q) and altitude (h) change due to control surface deflections. From these equations, transfer functions can be derived…
+These equations describe how the aircraft’s vertical velocity (w), pitch rate (q) and altitude (h) change due to control surface deflections ($\eta$). From these equations, transfer functions can be derived…
 
 \begin{equation}
-    G^{q}_{\eta}=  {{(\overline M_{\eta}+\overline M_{\dot w}\overline Z_{\eta})s+(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}\over{s^2-(V_{R}\overline M_{\dot w}+\overline Z_{w}+\overline M_{q})s+(\overline M_{q}\overline Z_{w}-V_{R}\overline M_{w})}} 
+    G^{q}_{\eta}(s)=  {{(\overline M_{\eta}+\overline M_{\dot w}\overline Z_{\eta})s+(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}\over{s^2-(V_{R}\overline M_{\dot w}+\overline Z_{w}+\overline M_{q})s+(\overline M_{q}\overline Z_{w}-V_{R}\overline M_{w})}} 
 \end{equation}
 \label{eq:2.5}
-\myequations{Transfer Function: How Elevatorr Deflection Impacts Pitch Rate}
+\myequations{Transfer Function: How Elevator Deflection Impacts Pitch Rate}
 
 Equation 2.5 describes how elevator deflection affections pitch rate.
 
 \begin{equation}
-    G^{\theta}_{\eta}=  {{1}\over{s}}  \cdot G^{q}_{\eta}
+    G^{\theta}_{\eta}(s)=  {{1}\over{s}}  \cdot G^{q}_{\eta}
 \end{equation}
 \label{eq:2.6}
-\myequations{Transfer Function: How Elevatorr Deflection Impacts Pitch Angle}
+\myequations{Transfer Function: How Elevator Deflection Impacts Pitch Angle}
 
 Equation 2.6 describes how elevator deflection affects pitch angle.
 
 \begin{equation}
-    G^{h}_{\theta}=  {{1}\over{s}}  \cdot  {{-\overline Z_{\eta}s^2+(\overline M_{q}+V_{R}\overline M_{\dot w})\overline Z_{\eta}s+V_{R}(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}\over{(\overline M_{\eta}+\overline M_{\dot w}\overline Z_{\eta})s+(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}} 
+    G^{h}_{\theta}(s)=  {{1}\over{s}}  \cdot  {{-\overline Z_{\eta}s^2+(\overline M_{q}+V_{R}\overline M_{\dot w})\overline Z_{\eta}s+V_{R}(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}\over{(\overline M_{\eta}+\overline M_{\dot w}\overline Z_{\eta})s+(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}} 
 \end{equation}
 \label{eq:2.7}
 \myequations{Transfer Function: How Pitch Angle Impacts Altitude}
@@ -207,7 +192,7 @@ When $\zeta$ takes the value of 0.5 and $\omega_{n}$ takes the value of 3, $s_{1
 Then, a compensator zero is placed at $s=-a$ so that the desired pole lies on the root locus. This is achieved by first reducing the block diagram shown in figure 2, by replacing $G^\eta_{\eta_{a}}$ and $G^q_{\eta}$ with transfer function $G_{p}$.Finally transfer function $G_{1}$ can be found by dividing by $s$:
 
 \begin{equation}
-    G_{1}={{G_{p}}\over{s}}
+    G_{1} (s)={{G_{p}}\over{s_1}}
 \end{equation}
 \label{eq:2.11}
 \myequations{Transfer Function $G_1$ - used to find compensator zero.}
@@ -215,7 +200,7 @@ Then, a compensator zero is placed at $s=-a$ so that the desired pole lies on th
 Finally, the value of $a$ can be determined by ensuring that the sum of $a$ and the angle of $s_1$ multipled by the angle of $G_1$ is equal to $\pi$. This can be expressed mathematically as:
 
 \begin{equation}
-    \angle{((s_1+a)G_1)}=\pi
+    \angle{((s_1+a)G_1 (s))}=\pi
 \end{equation}
 \label{eq:2.12}
 \myequations{Expression for finding $a$}
@@ -236,10 +221,86 @@ With the compensator pole in place, values of the gains $K_q$ and $K_{theta}$ ca
 So the closed-loop transfer function of the pitch attitude system is:
 
 \begin{equation}
-    G^{\theta}_{\theta_{ref}}={{G_1}\over{1=K_q(s+a)G_1}}
+    G^{\theta}_{\theta_{c}}={{G_1 (s)}\over{1+K_q(s+a)G_1 (s)}}
 \end{equation}
 \label{eq:2.15}
 \myequations{Transfer Function $G^{\theta}_{\theta_{ref}}$ - CLTF of pitch attitude system.}
+
+The denominator of the transfer function in equation 2.15 is the characteristic equation of the pitch attitude system. This means that the zero of the system is located at  $s=-a$, with point $s_1$ lying on the root locus branch for the open loop transfer function: 
+
+\begin{equation}
+    G_2(s_1) = (s+a)G_1 (s)
+    \label{eq:2.16}
+\end{equation}
+\myequations{Transfer Function $G_2$ - OLTF of pitch attitude system.}
+
+This transfer function should also satisfy the root locus criterion, as the angular value should be exactly equal to $\pi$.
+
+The second stage (outer loop) regulates the aircraft’s altitude by adjusting the pitch attitude. The altimeter provides altitude feedback, and a compensator adjusts the pitch command to correct altitude deviations. The altitude loop is only closed after designing the pitch control loop, so that appropriate pitch commands are generated, and then executed by the inner loop. Therefore, since the transfer function for the inner loop has been set (equation 2.15) the design for the outer loop can be determined by block diagram reduction, as seen in figure 2.2.
+
+\begin{figure}[H]
+    \caption{Simplified block diagram for the altitude hold loop (outer loop).}
+    \label{fig:block_diagram_simplified_altitude_hold}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/figure 2.2.jpg}
+\end{figure}
+
+Where: 
+
+\begin{equation}
+    G^{\prime}= ({{1}\over{1+0.75s}})G^{\theta}_{\theta_{c}}(s)G^h_{\theta}(s)
+    \label{eq:2.17}
+\end{equation}
+\myequations{Transfer Function $G^{\prime}$}
+
+And: 
+
+\begin{equation}
+    G^*(s)=G^{\prime}(s)G_{alt}(s)
+    \label{eq:2.18}
+\end{equation}
+\myequations{Transfer Function $G^{*}$}
+
+Terms $K_h^{\prime}$ and $b_1$ are to be determined, however transfer function $G_{alt}(s)$ has known properties as the performance of the aircraft's elevators have been measured.
+
+\begin{equation}
+    G_{alt}(s)={{10}\over{s+10}}
+    \label{eq:2.19}
+\end{equation}
+\myequations{Transfer Function $G_{alt}$}
+
+For the outer loop, an identical method, to what was used in the inner loop, is used to design a root locus. The only difference is that we solve with complex number $s_2$ by using a $\zeta$ of 0.5 and a $\omega_n$ of 0.5 rad/s. Therefore, by recalling equations 2.8, 2.9 and 2.10, the complex number $s_2$ is found. Therefore, a compensator zero can be placed when $s=b_1$, which can be found by slightly modifying equation 2.12:
+
+\begin{equation}
+    \angle{((s_2+b_1)G^* (s_2))}=\pi
+\end{equation}
+\label{eq:2.20}
+\myequations{Expression for finding $b_1$}
+
+Once a suitable $b_1$ has been determined, the transfer function $G_3(s_2)$ can be determined, by taking $G_{alt}$ and multiplying by $(s+b_1)$, which now includes our compensator zero in the transfer function. This means that, the value of the gains $K_h^{\prime}$ and $K_h$ can be found by direct calculation:
+
+\begin{equation}
+    K_h^{\prime}={{1}\over{|G_3(s2)}}
+\end{equation}
+\label{eq:2.21}
+\myequations{Expression for finding $K_h^{\prime}$}
+\begin{equation}
+    K_h={{K_h^{\prime}}\over{b_1}}
+\end{equation}
+\label{eq:2.22}
+\myequations{Expression for finding $K_h$}
+
+Additionally, just like for $G_2(s_1)$ the angular value of the transfer function $G_3(s2)$ should be exactly equal to $\pi$. 
+
+Now, all unknown terms have been evaluated, including the gains used in the Compensator block in figure 2.2. This means that the outer loop can be closed around the inner loop, completing the theoretical altitude hold design. The simplified closed loop transfer function is:
+
+\begin{equation}
+    G_{h_c}^h(s)={{K_h^{\prime}(s+b_1)G^{\prime}}\over{1+G_3(s_2)K_h^{\prime}}}
+\end{equation}
+\label{eq:2.23}
+\myequations{Closed loop transfer function of the altitude hold system.}
+
+It's important to note the key relationship between the two loops: the inner loop must be fast and stable to respond effectively to pitch commands from the outer loop, whereas, the outer loop uses the inner loop to influence the altitude, but operates slower to avoid excessive oscillaitons. 
 
 \subsection{Modelling and Results}
 \subsection{Discussion}
