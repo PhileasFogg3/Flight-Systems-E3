@@ -27,6 +27,7 @@
 \usepackage{tocloft}
 \usepackage{float}
 \usepackage{listings}
+\usepackage{gensymb}
 
 \addbibresource{bibliography.bib}
 
@@ -108,36 +109,36 @@ The key objectives of any altitude hold system are:
 
 \subsubsection{Theory}
 
-The altitude hold system is modelled using the two degrees of freedom linear equations of motion, which describe aircraft longitudinal dynamics.
+The altitude hold system is modelled using the two degrees of freedom linear equations of motion, which describe aircraft longitudinal dynamics. They are given by
 
 \begin{equation}
-    {\dot w} = \overline Z_{w} w+ V_{R}q+\overline  Z_{\eta } \eta  
+    {\dot w} = \overline Z_{w} w+ V_{R}q+\overline  Z_{\eta } \eta \, , 
 \end{equation}
 \label{eq:2.1}
 \myequations{Two DOF Linear Equation of Motion 1}
 
 \begin{equation}
-    {\dot q}- \overline M_{ {\dot w} }{\dot w}=\overline  M_{w}w+ \overline M_{q}q+ \overline  M_{\eta } \eta
+    {\dot q}- \overline M_{ {\dot w} }{\dot w}=\overline  M_{w}w+ \overline M_{q}q+ \overline  M_{\eta } \eta \, ,
 \end{equation}
 \label{eq:2.2}
 \myequations{Two DOF Linear Equation of Motion 2}
 
 \begin{equation}
-    q={\dot \theta } 
+    q={\dot \theta} \, ,
 \end{equation}
 \label{eq:2.3}
 \myequations{Two DOF Linear Equation of Motion 3}
 
 \begin{equation}
-    {\dot h}=  V_{R} \theta -w
+    {\dot h}=  V_{R} \theta -w \, ,
 \end{equation}
 \label{eq:2.4}
 \myequations{Two DOF Linear Equation of Motion 4}
 
-These equations describe how the aircraft’s vertical velocity (w), pitch rate (q) and altitude (h) change due to control surface deflections ($\eta$). From these equations, transfer functions can be derived…
+These equations describe how the aircraft’s vertical velocity (w), pitch rate (q) and altitude (h) change due to control surface deflections ($\eta$). From these equations, transfer functions in the laplace domain can be derived
 
 \begin{equation}
-    G^{q}_{\eta}(s)=  {{(\overline M_{\eta}+\overline M_{\dot w}\overline Z_{\eta})s+(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}\over{s^2-(V_{R}\overline M_{\dot w}+\overline Z_{w}+\overline M_{q})s+(\overline M_{q}\overline Z_{w}-V_{R}\overline M_{w})}} 
+    G^{q}_{\eta}(s)=  {{(\overline M_{\eta}+\overline M_{\dot w}\overline Z_{\eta})s+(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}\over{s^2-(V_{R}\overline M_{\dot w}+\overline Z_{w}+\overline M_{q})s+(\overline M_{q}\overline Z_{w}-V_{R}\overline M_{w})}} \, , 
 \end{equation}
 \label{eq:2.5}
 \myequations{Transfer Function: How Elevator Deflection Impacts Pitch Rate}
@@ -145,7 +146,7 @@ These equations describe how the aircraft’s vertical velocity (w), pitch rate 
 Equation 2.5 describes how elevator deflection affections pitch rate.
 
 \begin{equation}
-    G^{\theta}_{\eta}(s)=  {{1}\over{s}}  \cdot G^{q}_{\eta}
+    G^{\theta}_{\eta}(s)=  {{1}\over{s}}  \cdot G^{q}_{\eta} \, ,
 \end{equation}
 \label{eq:2.6}
 \myequations{Transfer Function: How Elevator Deflection Impacts Pitch Angle}
@@ -153,14 +154,14 @@ Equation 2.5 describes how elevator deflection affections pitch rate.
 Equation 2.6 describes how elevator deflection affects pitch angle.
 
 \begin{equation}
-    G^{h}_{\theta}(s)=  {{1}\over{s}}  \cdot  {{-\overline Z_{\eta}s^2+(\overline M_{q}+V_{R}\overline M_{\dot w})\overline Z_{\eta}s+V_{R}(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}\over{(\overline M_{\eta}+\overline M_{\dot w}\overline Z_{\eta})s+(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}} 
+    G^{h}_{\theta}(s)=  {{1}\over{s}}  \cdot  {{-\overline Z_{\eta}s^2+(\overline M_{q}+V_{R}\overline M_{\dot w})\overline Z_{\eta}s+V_{R}(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}\over{(\overline M_{\eta}+\overline M_{\dot w}\overline Z_{\eta})s+(\overline M_{w}\overline Z_{\eta}-\overline M_{\eta}\overline Z_{w})}} \, , 
 \end{equation}
 \label{eq:2.7}
 \myequations{Transfer Function: How Pitch Angle Impacts Altitude}
 
 Equation 2.7 describes how pitch angle affects altitude. \newline
 
-The autopilot system has been designed using a sequential loop closure approach, with two distinct stages. The first is the design of a pitch attitude hold system, which is made up of the two inner loops seen in figure 2.1. The second is the closure of the feedback loop around the pitch attitude hold system; again as seen in figure 2.1.
+The autopilot system has been designed using a sequential loop closure approach, with two distinct stages. The first is the design of a pitch attitude hold system, which is made up of the two inner loops seen in Figure 2.1. The second is the closure of the feedback loop around the pitch attitude hold system; again as seen in Figure 2.1.
 
 \begin{figure}[H]
     \caption{Block diagram of an Altitude Hold System.}
@@ -172,27 +173,27 @@ The autopilot system has been designed using a sequential loop closure approach,
 The first stage (inner loops) is responsible for regulating pitch attitude. It consists of both a pitch rate feedback loop, which damps excessive pitch rate variations, and a pitch angle feedback loop, which ensures the aircraft maintains required altitude by adjusting the elevator control. The closed loop transfer function for the pitch attitude design is derived by root locus design, to achieve a damping ratio of 0.5 and natural frequency of 3 rad/s. This is achieved as follows:
 
 \begin{equation}
-    s_{1} = -\sigma + j\omega_{d}
+    s_{1} = -\sigma + j\omega_{d} \, ,
 \end{equation}
 \label{eq:2.8}
 \myequations{Complex Number $s_1$}
 \begin{equation}
-    \sigma = \zeta\omega_{n}
+    \sigma = \zeta\omega_{n} \, ,
 \end{equation}
 \label{eq:2.9}
 \myequations{$\sigma$ In Terms of $\zeta$ and $\omega_n$}
 \begin{equation}
-    \omega_{d} = \omega_{n}\sqrt{1-\zeta^2}
+    \omega_{d} = \omega_{n}\sqrt{1-\zeta^2} \, ,
 \end{equation}
 \label{eq:2.10}
 \myequations{$\omega_d$ In Terms of $\zeta$ and $\omega_n$}
 
 When $\zeta$ takes the value of 0.5 and $\omega_{n}$ takes the value of 3, $s_{1}=-1.5+2.5981j$.\newline
 
-Then, a compensator zero is placed at $s=-a$ so that the desired pole lies on the root locus. This is achieved by first reducing the block diagram shown in figure 2, by replacing $G^\eta_{\eta_{a}}$ and $G^q_{\eta}$ with transfer function $G_{p}$.Finally transfer function $G_{1}$ can be found by dividing by $s$:
+Then, a compensator zero is placed at $s=-a$ so that the desired pole lies on the root locus. This is achieved by first reducing the block diagram shown in Figure 2, by replacing $G^\eta_{\eta_{a}}$ and $G^q_{\eta}$ with transfer function $G_{p}$. Finally transfer function $G_{1}$ can be found by dividing by $s$:
 
 \begin{equation}
-    G_{1} (s)={{G_{p}}\over{s_1}}
+    G_{1} (s)={{G_{p}}\over{s_1}} \, ,
 \end{equation}
 \label{eq:2.11}
 \myequations{Transfer Function $G_1$ - used to find compensator zero.}
@@ -200,20 +201,20 @@ Then, a compensator zero is placed at $s=-a$ so that the desired pole lies on th
 Finally, the value of $a$ can be determined by ensuring that the sum of $a$ and the angle of $s_1$ multipled by the angle of $G_1$ is equal to $\pi$. This can be expressed mathematically as:
 
 \begin{equation}
-    \angle{((s_1+a)G_1 (s))}=\pi
+    \angle{((s_1+a)G_1 (s))}=\pi \, ,
 \end{equation}
 \label{eq:2.12}
 \myequations{Expression for finding $a$}
 
-With the compensator pole in place, values of the gains $K_q$ and $K_{theta}$ can be obtained, so that the closed-loop transfer function of the pitch attitude control system can be found.
+With the compensator pole in place, values of the gains $K_q$ and $K_{\theta}$ can be obtained, so that the closed-loop transfer function of the pitch attitude control system can be found.
 
 \begin{equation}
-    K_q={{1}\over{|G_1(s_1)|}}
+    K_q={{1}\over{|G_1(s_1)|}} \, ,
 \end{equation}
 \label{eq:2.13}
 \myequations{Equation for gain $K_q$}
 \begin{equation}
-    K_{\theta}=aK_q
+    K_{\theta}=aK_q \, ,
 \end{equation}
 \label{eq:2.14}
 \myequations{Equation for gain $K_{\theta}$}
@@ -221,22 +222,22 @@ With the compensator pole in place, values of the gains $K_q$ and $K_{theta}$ ca
 So the closed-loop transfer function of the pitch attitude system is:
 
 \begin{equation}
-    G^{\theta}_{\theta_{c}}={{G_1 (s)}\over{1+K_q(s+a)G_1 (s)}}
+    G^{\theta}_{\theta_{c}}={{G_1 (s)}\over{1+K_q(s+a)G_1 (s)}} \, ,
 \end{equation}
 \label{eq:2.15}
 \myequations{Transfer Function $G^{\theta}_{\theta_{ref}}$ - CLTF of pitch attitude system.}
 
-The denominator of the transfer function in equation 2.15 is the characteristic equation of the pitch attitude system. This means that the zero of the system is located at  $s=-a$, with point $s_1$ lying on the root locus branch for the open loop transfer function: 
+The denominator of the transfer function in Equation 2.15 is the characteristic equation of the pitch attitude system. This means that the zero of the system is located at  $s=-a$, with point $s_1$ lying on the root locus branch for the open loop transfer function: 
 
 \begin{equation}
-    G_2(s_1) = (s+a)G_1 (s)
+    G_2(s_1) = (s+a)G_1 (s) \, ,
     \label{eq:2.16}
 \end{equation}
 \myequations{Transfer Function $G_2$ - OLTF of pitch attitude system.}
 
 This transfer function should also satisfy the root locus criterion, as the angular value should be exactly equal to $\pi$.
 
-The second stage (outer loop) regulates the aircraft’s altitude by adjusting the pitch attitude. The altimeter provides altitude feedback, and a compensator adjusts the pitch command to correct altitude deviations. The altitude loop is only closed after designing the pitch control loop, so that appropriate pitch commands are generated, and then executed by the inner loop. Therefore, since the transfer function for the inner loop has been set (equation 2.15) the design for the outer loop can be determined by block diagram reduction, as seen in figure 2.2.
+The second stage (outer loop) regulates the aircraft’s altitude by adjusting the pitch attitude. The altimeter provides altitude feedback, and a compensator adjusts the pitch command to correct altitude deviations. The altitude loop is only closed after designing the pitch control loop, so that appropriate pitch commands are generated, and then executed by the inner loop. Therefore, since the transfer function for the inner loop has been set (Equation 2.15) the design for the outer loop can be determined by block diagram reduction, as seen in Figure 2.2.
 
 \begin{figure}[H]
     \caption{Simplified block diagram for the altitude hold loop (outer loop).}
@@ -248,7 +249,7 @@ The second stage (outer loop) regulates the aircraft’s altitude by adjusting t
 Where: 
 
 \begin{equation}
-    G^{\prime}= ({{1}\over{1+0.75s}})G^{\theta}_{\theta_{c}}(s)G^h_{\theta}(s)
+    G^{\prime}= ({{1}\over{1+0.75s}})G^{\theta}_{\theta_{c}}(s)G^h_{\theta}(s) \, ,
     \label{eq:2.17}
 \end{equation}
 \myequations{Transfer Function $G^{\prime}$}
@@ -256,7 +257,7 @@ Where:
 And: 
 
 \begin{equation}
-    G^*(s)=G^{\prime}(s)G_{alt}(s)
+    G^*(s)=G^{\prime}(s)G_{alt}(s) \, ,
     \label{eq:2.18}
 \end{equation}
 \myequations{Transfer Function $G^{*}$}
@@ -264,15 +265,15 @@ And:
 Terms $K_h^{\prime}$ and $b_1$ are to be determined, however transfer function $G_{alt}(s)$ has known properties as the performance of the aircraft's elevators have been measured.
 
 \begin{equation}
-    G_{alt}(s)={{10}\over{s+10}}
+    G_{alt}(s)={{10}\over{s+10}} \, ,
     \label{eq:2.19}
 \end{equation}
 \myequations{Transfer Function $G_{alt}$}
 
-For the outer loop, an identical method, to what was used in the inner loop, is used to design a root locus. The only difference is that we solve with complex number $s_2$ by using a $\zeta$ of 0.5 and a $\omega_n$ of 0.5 rad/s. Therefore, by recalling equations 2.8, 2.9 and 2.10, the complex number $s_2$ is found. Therefore, a compensator zero can be placed when $s=b_1$, which can be found by slightly modifying equation 2.12:
+For the outer loop, an identical method, to what was used in the inner loop, is used to design a root locus. The only difference is that we solve with complex number $s_2$ by using a $\zeta$ of 0.5 and a $\omega_n$ of 0.5 rad/s. Therefore, by recalling Equations 2.8, 2.9 and 2.10, the complex number $s_2$ is found. Therefore, a compensator zero can be placed when $s=b_1$, which can be found by slightly modifying Equation 2.12:
 
 \begin{equation}
-    \angle{((s_2+b_1)G^* (s_2))}=\pi
+    \angle{((s_2+b_1)G^* (s_2))}=\pi \, ,
 \end{equation}
 \label{eq:2.20}
 \myequations{Expression for finding $b_1$}
@@ -280,22 +281,22 @@ For the outer loop, an identical method, to what was used in the inner loop, is 
 Once a suitable $b_1$ has been determined, the transfer function $G_3(s_2)$ can be determined, by taking $G_{alt}$ and multiplying by $(s+b_1)$, which now includes our compensator zero in the transfer function. This means that, the value of the gains $K_h^{\prime}$ and $K_h$ can be found by direct calculation:
 
 \begin{equation}
-    K_h^{\prime}={{1}\over{|G_3(s2)}}
+    K_h^{\prime}={{1}\over{|G_3(s2)}} \, ,
 \end{equation}
 \label{eq:2.21}
 \myequations{Expression for finding $K_h^{\prime}$}
 \begin{equation}
-    K_h={{K_h^{\prime}}\over{b_1}}
+    K_h={{K_h^{\prime}}\over{b_1}} \, ,
 \end{equation}
 \label{eq:2.22}
 \myequations{Expression for finding $K_h$}
 
 Additionally, just like for $G_2(s_1)$ the angular value of the transfer function $G_3(s2)$ should be exactly equal to $\pi$. 
 
-Now, all unknown terms have been evaluated, including the gains used in the Compensator block in figure 2.2. This means that the outer loop can be closed around the inner loop, completing the theoretical altitude hold design. The simplified closed loop transfer function is:
+Now, all unknown terms have been evaluated, including the gains used in the Compensator block in Figure 2.2. This means that the outer loop can be closed around the inner loop, completing the theoretical altitude hold design. The simplified closed loop transfer function is:
 
 \begin{equation}
-    G_{h_c}^h(s)={{K_h^{\prime}(s+b_1)G^{\prime}}\over{1+G_3(s_2)K_h^{\prime}}}
+    G_{h_c}^h(s)={{K_h^{\prime}(s+b_1)G^{\prime}}\over{1+G_3(s_2)K_h^{\prime}}} \, ,
 \end{equation}
 \label{eq:2.23}
 \myequations{Closed loop transfer function of the altitude hold system.}
@@ -303,6 +304,273 @@ Now, all unknown terms have been evaluated, including the gains used in the Comp
 It's important to note the key relationship between the two loops: the inner loop must be fast and stable to respond effectively to pitch commands from the outer loop, whereas, the outer loop uses the inner loop to influence the altitude, but operates slower to avoid excessive oscillaitons. 
 
 \subsection{Modelling and Results}
+\subsubsection{Modelling}
+The mathematical modelling of the altitude hold system was completed inside of a MATLAB environment, with two distinct scripts (.m files). One of these files is responsible for handling all variables that will be used throughout the course of the design process. The second file contains the mathematical model of the altitude hold system as outlined previously. 
+
+Storing the variables in a different script provides a great deal of flexibility, as changing one line of code will enable the user to simulate the autopilot hold system in different conditions, without having to manually change each aerodynamic and control derivative. Variable files are stored in the following format:
+
+\begin{lstlisting}[language=MATLAB]
+%%% Stability and Control Derivatives %%%
+function [Xu, Zu, Mu, Xw, Zw, Mw, Xw_dot, Zw_dot, Mw_dot, Xq, Zq, Mq, Xeta, Zeta, Meta, VR, g] = final_assignment_variables()
+    Xu = -1.58E-02;    Zu = -1.442E-01;    Mu = -1.3442E-04;
+    Xw_dot = 0;        Zw_dot = -2.2E-03;  Mw_dot = -2.0483E-04;
+    Xw = 3.79E-03;     Zw = -8.73E-01;     Mw = -6.0107E-03;
+    Xq = 0;            Zq = 0;             Mq = -9.88E-01;
+    Xeta = 0;          Zeta = -1.2408E+01;  Meta = -1.153E+01;
+    
+    VR = 236; g = 9.8100;
+end
+%%% END OF VARIABLES %%%
+\end{lstlisting}
+
+The main substance of the Autopilot script has been broken down into 17 steps, each aiming to accomplish a specific design goal. The MATLAB code is as follows:
+\begin{lstlisting}[language=MATLAB]
+%%% Workspace Cleanup %%%
+clc;
+clear;
+close all;
+
+s = tf('s');
+%%% Stability and Control Derivatives and Flight Condition %%%
+[Xu, Zu, Mu, Xw, Zw, Mw, Xw_dot, Zw_dot, Mw_dot, Xq, Zq, Mq, Xeta, Zeta, Meta, VR, g] = final_assignment_variables(); % Change the name of this function to to run this system with different variable values.
+
+%%% Actuator and Altimeter Dynamics %%%
+G_etaA_eta = -4/(s+4);
+G_etaA_eta_Numerator = cell2mat(G_etaA_eta.Numerator); % Gets numerator in appropriate form for Simulink
+G_etaA_eta_Denominator = cell2mat(G_etaA_eta.Denominator); % Gets denominator in appropriate form for Simulink
+G_alt = 10/(s+10);
+G_alt_Numerator = cell2mat(G_alt.Numerator);
+G_alt_Denominator = cell2mat(G_alt.Denominator);
+
+%%% Transfer Functions - TASK 1 %%% 
+G_eta_q = ((Meta + (Mw_dot*Zeta))*s + ((Mw*Zeta) - (Meta*Zw)) )/((s^2) - ((VR*Mw_dot) + Zw + Mq)*s +((Mq*Zw) - (VR*Mw)));
+G_eta_q_Numerator = cell2mat(G_eta_q.Numerator); % Gets numerator in appropriate form for Simulink
+G_eta_q_Denominator = cell2mat(G_eta_q.Denominator); % Gets denominator in appropriate form for Simulink
+G_eta_theta = 1/s * G_eta_q;
+G_theta_h = 1/s * ((-Zeta*(s^2))+ Zeta*s*(Mq+VR*Mw_dot) + VR*(Mw*Zeta-Meta*Zw))/(s*(Meta+Mw_dot*Zeta) + (Mw*Zeta-Meta*Zw));
+Gp = G_etaA_eta*G_eta_q;
+G1 = Gp/s;
+
+%%% Root Locus Design for Pitch Control - TASK 2 %%%
+Wn = 3;
+zeta = 0.5;
+sigma = zeta*Wn;
+Wd = Wn*sqrt(1-zeta^2);
+s1 = -sigma + 1i * Wd;
+
+%%% Plot The Root Locus for Pitch Control - TASK 3 %%%
+figure;
+rlocus(G1)
+hold on;
+plot(real(s1), imag(s1), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+title('Root Locus of G1(s) - Pitch Control');
+grid off;
+
+%%% Evaluating the Complex Number of G1 - TASK 4 %%%
+G1_s1 = evalfr(G1, s1);
+mag_G1_s1 = abs(G1_s1);
+angle_G1_s1 = angle(G1_s1);
+
+%%% Find the location of the compensating Zero - TASK 5 %%%
+alpha_c = pi - angle_G1_s1;
+a = sigma + Wd / tan(alpha_c); % Finds the zero location, a, by accounting for the phase shortfall at point s1. 
+
+%%% Define G2 and show the point s1 on it's Root Locus Plot - TASK 6 %%%
+G2 = (s+a)*G1;
+G2_s1 = evalfr(G2, s1);
+angle_G2_s1 = angle(G2_s1); % May output a value close to, but not exactly pi - the criterion should still be met.
+fprintf('The phase of G2 at s1 is: %.4f radians\n', abs(angle_G2_s1));
+figure;
+rlocus(G2);
+hold on;
+plot(real(s1), imag(s1), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+title('Root Locus of G2(s) - Pitch Control');
+grid off;
+
+%%% Check to see if the angle criterion is satisfied %%%
+if abs(abs(angle_G2_s1) - pi) < 1e-3
+    disp('The angle criterion has been satisfied for G2 at s1 - the phase is approximately pi.');
+else
+    disp('The angle criterion has not been satisfied.');
+end
+
+%%% Calculating the Gains - TASK 7 %%%
+Kq = 1/(abs(G2_s1)); % Kq*mag_G1_s1 = 1. This satisfies the magnitude condition at s1. This means the CL pole will be at s1. 
+Ktheta = a*Kq; % Therefore, Krg = Kq.
+
+%%% Determine the CLTF and find the Zeros and Poles - TASK 8 %%%
+G_theta_c = feedback(G1,Kq*(s+a));
+
+info = stepinfo(G_theta_c*5); % Gets the properties from the CLTF with a step change of 5 degrees.
+overshoot = info.Overshoot;       % Percentage overshoot of CLTF
+settlingTime = info.SettlingTime;   % Settling time in seconds of CLTF
+finalValue = dcgain(G_theta_c*5);      % Final value of CLTF
+
+figure;
+[response, time] = step(G_theta_c*5);
+plot(time, response, 'LineWidth',2);
+
+[maxVal, maxIdx] = max(response); 
+maxTime = time(maxIdx); % Find the maximum response value and its time
+
+grid on;
+title('Step Response of Pitch Attitude Control - Pitch Control');
+
+annotationStr = sprintf('Maximum Overshoot: %.2f%%\nSettling Time: %.2f s\nFinal Value: %.2f', overshoot, settlingTime, finalValue); % Creates the annotation text with variable placeholders.
+
+annotation('textbox', [0.3, 0.3, 0.3, 0.2], 'String', annotationStr, 'FitBoxToText', 'on', 'BackgroundColor', '#ADD8E6', 'EdgeColor', 'black', 'FontSize', 50); % Creates the annotation with a text box.
+
+pole_G_altitude = pole(G_theta_c);
+zero_G_altitude = zero(G_theta_c);
+disp('The poles of G_theta_c are:');
+disp(pole_G_altitude);
+disp('The zeros of G_theta_c are:');
+disp(zero_G_altitude);
+
+%%% Define Altitude Loop Transfer Functions - TASK 9 %%%
+a_c = 0.75;
+G_prime = (1 / (1 + a_c*s)) * G_theta_c * G_theta_h; 
+G_star = G_prime * G_alt;
+
+%%% Root Locus Design for Altitude Control - TASK 10 %%%
+Wn_2 = 0.5;
+zeta_2 = 0.5;
+sigma_2 = zeta_2*Wn_2;
+Wd_2 = Wn_2*sqrt(1-zeta_2^2);
+s2 = -sigma_2 + 1i * Wd_2;
+
+%%% Plot the Root Locus for Altitude Control - TASK 11 %%%
+figure;
+rlocus(G_star);
+hold on;
+plot(real(s2), imag(s2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+title('Root Locus of G*(s) - Altitude Control');
+grid off;
+
+%%% Evaluating the Complex Number of G_star - TASK 12 %%%
+G_star_s2 = evalfr(G_star, s2);
+mag_G_star_s2 = abs(G_star_s2);
+angle_G_star_s2 = angle(G_star_s2);
+
+%%% Compute Zero Location for Altitude Control - TASK 13 %%%
+alpha_c_prime = pi - angle_G_star_s2;
+b1 = sigma_2 + Wd_2 / tan(alpha_c_prime);
+
+%%% Define G3(s) and Root Locus Plot for Altitude Control - TASK 14 %%%
+G3 = (s + b1) * G_star;
+G3_s2 = evalfr(G3, s2);
+angle_G3_s2 = angle(G3_s2);
+fprintf('The phase of G3 at s2 is: %.4f radians\n', abs(angle_G3_s2));
+figure;
+rlocus(G3);
+hold on;
+plot(real(s2), imag(s2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+title('Root Locus of G3(s) - Altitude Control');
+grid off;
+
+%%% Check to see if the angle criterion is satisfied %%%
+if abs(abs(angle_G3_s2) - pi) < 1e-3
+    disp('The angle criterion has been satisfied for G3 at s2 - the phase is approximately pi.');
+else
+    disp('The angle criterion has not been satisfied.');
+end
+
+%%% Calculate the gain Kh_prime - TASK 15 %%%
+kh_prime = 1/abs(G3_s2);
+
+%%% Calculate the gain Kh - TASK 16 %%%
+kh = kh_prime * b1;
+
+%%% Compute Closed Loop Transfer Function - TASK 17 %%%
+G_altitude = feedback(kh*(s+b1)*G_prime, G_alt);
+
+info_2 = stepinfo(50 * G_altitude); % Gets the properties from the CLTF with a step change of 5 degrees.
+overshoot_2 = info_2.Overshoot;       % Percentage overshoot of CLTF
+settlingTime_2 = info_2.SettlingTime;   % Settling time in seconds of CLTF
+finalValue_2 = dcgain(G_altitude*50);      % Final value of CLTF
+
+figure;
+[response_2, time_2] = step(50 * G_altitude);
+plot(time_2, response_2, 'LineWidth',2);
+
+[maxVal_2, maxIdx_2] = max(response); 
+maxTime_2 = time(maxIdx_2); % Find the maximum response value and its time
+
+title('Step Response of Altitude Hold System - Altitude Control');
+grid on;
+
+annotationStr_2 = sprintf('Maximum Overshoot: %.2f%%\nSettling Time: %.2f s\nFinal Value: %.2f', overshoot_2, settlingTime_2, finalValue_2); % Creates the annotation text with variable placeholders.
+
+annotation('textbox', [0.3, 0.3, 0.3, 0.2], 'String', annotationStr_2, 'FitBoxToText', 'on', 'BackgroundColor', '#ADD8E6', 'EdgeColor', 'black', 'FontSize', 50); % Creates the annotation with a text box.
+
+pole_G_altitude = pole(G_altitude);
+zero_G_altitude = zero(G_altitude);
+disp('The poles of G_altitude are:');
+disp(pole_G_altitude);
+disp('The zeros of G_altitude are:');
+disp(zero_G_altitude);
+
+%%% Get the compensator and G_prime block for Simulink %%%
+
+overallBlock = G_prime * kh_prime*(s+b1);
+overallBlock_Numerator = cell2mat(overallBlock.Numerator);
+overallBlock_Denominator = cell2mat(overallBlock.Denominator);
+
+%%% END OF SCRIPT %%%
+\end{lstlisting}
+
+Originally, a requirement for this assignment was to also complete separate simulations inside of SIMULINK, but this element of the assessment has been subsequently removed. All the code relating to this part of the assessment remain in the script above. 
+
+Tasks 3, 6, 8, 11, 14 and 17 each provide a major output, or result, which can be used to monitor the progress of the simulation.
+\subsubsection{Results}
+First of all, the results from Task 3 will be discussed. Task 3 outputs a root locus plot, as seen in Figure 2.3.
+\begin{figure}[H]
+    \caption{The Root Locus of $G_1(s)$ - Pitch Control}
+    \label{fig:task3_result}
+    \centering
+    \includegraphics[width=1.0\textwidth]{pictures/Auotpilot/Task3.jpg}
+\end{figure}
+
+We can recall the equation of transfer function $G_1(s)$ in Equation 2.11. The root locus of $G_1$ has been plotted along side the complex number $s_1$. However, the complex number does not lie upon a branch of the root locus. This complex number must lie on a branch for the system to function correctly as they represent the location of the system's closed-loop poles. This is why in following tasks, the location of a compensating zero is found. When all the criteria are met, a compensating zero will move the branches of the root locus so that the complex number will lie upon them. 
+
+Task 6 acts a check for this, as it outputs the root locus plot of transfer function $G_2 (s_1)$, Equation 2.16 shows it's mathematical representation. The important difference between $G_1 (s)$ and $G_2 (s_1)$ is that $G_2 (s_1)$ has been compensated with a new zero. This results in the the plot shown in Figure 2.4.
+\begin{figure}[H]
+    \caption{The Root Locus of $G_2(s_1)$ - Pitch Control}
+    \label{fig:task6_result}
+    \centering
+    \includegraphics[width=1.0\textwidth]{pictures/Auotpilot/Task6.jpg}
+\end{figure}
+As seen in Figure 2.4, the root locus plot now intersects with the complex number $s_1$. This means that an acceptable closed-loop pole of the system has been found. Therefore, the step response of the pitch attitude system can be plotted. For this particular simulation, the aircraft experiences a $5^{\degree}$ change to it's pitch attitude. The output of this step response is seen in Figure 2.5.
+\begin{figure}[H]
+    \caption{Step Response of Pitch Attidude System.}
+    \label{fig:task8_result}
+    \centering
+    \includegraphics[width=1.0\textwidth]{pictures/Auotpilot/Task8.jpg}
+\end{figure}
+Figure 2.5 shows that the pitch control system responds to the $5^{\degree}$ change by sending a pitch correction command to the altitude hold system after 6.49 seconds. The pitch needed to correct is $17.8^{\degree}$. All tasks from this point onwards are for the altitude hold section. 
+
+Tasks 11 and 14 are identical to tasks 3 and 6 in terms of their basic function. However, the root locus is designed for transfer function $G^*$ which is defined in Equation 2.18. Therefore, the inital root locus plot is produced, for complex number $s_2$, as seen in Figure 2.6. 
+\begin{figure}[H]
+    \caption{Root Locus Design for $G^*$.}
+    \label{fig:task11_result}
+    \centering
+    \includegraphics[width=1.0\textwidth]{pictures/Auotpilot/Task11.jpg}
+\end{figure}
+Just as in task 3, the complex number does not lie on a branch for the root locus design. Therefore, by the method outlined in the theory, it is moved onto a branch, in an identical method to task 6. The result of task 14 can be seen in Figure 2.7
+\begin{figure}[H]
+    \caption{Root Locus Design for $G_3(s_2)$.}
+    \label{fig:task14_result}
+    \centering
+    \includegraphics[width=1.0\textwidth]{pictures/Auotpilot/Task14.jpg}
+\end{figure}
+This means that the final design has been completed for the altitude hold system. Therefore, the step response can be plotted in task 17. The following simulation shows the response, assuming the aircraft excperienced an altitude change of $50m$ due to the pitch change discussed in task 8. The step response can be seen in Figure 2.8.
+\begin{figure}[H]
+    \caption{Step Response of Altitude Hold System.}
+    \label{fig:task17_result}
+    \centering
+    \includegraphics[width=1.0\textwidth]{pictures/Auotpilot/Task17.jpg}
+\end{figure}
+As seen in this step response, after 14.42 seconds, the aircraft has returned exactly to it's original height (the difference between the altitude change and final value is zero). There is a slight oscillation, as the aircraft initially over-corrects before returning to the original value. 
 \subsection{Discussion}
 \subsection{Conclusions}
 
