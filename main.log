@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.10.16)  16 MAR 2025 23:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.10.16)  17 MAR 2025 12:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1335,7 +1335,7 @@ File: pictures/Auotpilot/Task17.jpg Graphic file (type jpg)
 <use pictures/Auotpilot/Task17.jpg>
 Package pdftex.def Info: pictures/Auotpilot/Task17.jpg  used on input line 571.
 (pdftex.def)             Requested size: 452.9679pt x 232.66309pt.
- [23 <./pictures/Auotpilot/Task11.jpg> <./pictures/Auotpilot/Task14.jpg>] [24 <./pictures/Auotpilot/Task17.jpg>] (main.lof)
+ [23 <./pictures/Auotpilot/Task11.jpg> <./pictures/Auotpilot/Task14.jpg>] [24 <./pictures/Auotpilot/Task17.jpg>] [25] (main.lof)
 \tf@lof=\write9
 \openout9 = `main.lof'.
 
@@ -1343,11 +1343,11 @@ Package pdftex.def Info: pictures/Auotpilot/Task17.jpg  used on input line 571.
 \tf@lot=\write10
 \openout10 = `main.lot'.
 
- (main.equ [25])
+ (main.equ [26])
 \tf@equ=\write11
 \openout11 = `main.equ'.
 
- [26] AED endfloat: Processing end Figures and Tables [27
+ [27] AED endfloat: Processing end Figures and Tables [28
 
 ] (main.aux)
  ***********
@@ -1361,8 +1361,8 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46461 strings out of 474486
- 1024458 string characters out of 5743282
+ 46462 strings out of 474486
+ 1024465 string characters out of 5743282
  2225548 words of memory out of 5000000
  67727 multiletter control sequences out of 15000+600000
  614797 words of font info for 108 fonts, out of 8000000 for 9000
@@ -1372,9 +1372,9 @@ Here is how much of TeX's memory you used:
 pdfTeX warning (dest): name{page.54} has been referenced but does not exist, replaced by a fixed one
 
 <C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Philip/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (27 pages, 1143076 bytes).
+Output written on main.pdf (28 pages, 1146553 bytes).
 PDF statistics:
- 602 PDF objects out of 1000 (max. 8388607)
- 288 named destinations out of 1000 (max. 500000)
+ 608 PDF objects out of 1000 (max. 8388607)
+ 289 named destinations out of 1000 (max. 500000)
  173 words of extra memory for PDF output out of 10000 (max. 10000000)
 

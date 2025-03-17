@@ -301,7 +301,7 @@ Now, all unknown terms have been evaluated, including the gains used in the Comp
 \label{eq:2.23}
 \myequations{Closed loop transfer function of the altitude hold system.}
 
-It's important to note the key relationship between the two loops: the inner loop must be fast and stable to respond effectively to pitch commands from the outer loop, whereas, the outer loop uses the inner loop to influence the altitude, but operates slower to avoid excessive oscillaitons. 
+It's important to note the key relationship between the two loops: the inner loop must be fast and stable to respond effectively to pitch commands from the outer loop, whereas, the outer loop uses the inner loop to influence the altitude, but operates slower to avoid excessive oscillations. 
 
 \subsection{Modelling and Results}
 \subsubsection{Modelling}
@@ -519,7 +519,7 @@ overallBlock_Denominator = cell2mat(overallBlock.Denominator);
 %%% END OF SCRIPT %%%
 \end{lstlisting}
 
-Originally, a requirement for this assignment was to also complete separate simulations inside of SIMULINK, but this element of the assessment has been subsequently removed. All the code relating to this part of the assessment remain in the script above. 
+Originally, a requirement for this assignment was to also complete separate simulations inside of SIMULINK, but this element of the assessment has been subsequently removed. All the code relating to this part of the assessment remains in the script above. 
 
 Tasks 3, 6, 8, 11, 14 and 17 each provide a major output, or result, which can be used to monitor the progress of the simulation.
 \subsubsection{Results}
@@ -549,7 +549,7 @@ As seen in Figure 2.4, the root locus plot now intersects with the complex numbe
 \end{figure}
 Figure 2.5 shows that the pitch control system responds to the $5^{\degree}$ change by sending a pitch correction command to the altitude hold system after 6.49 seconds. The pitch needed to correct is $17.8^{\degree}$. All tasks from this point onwards are for the altitude hold section. 
 
-Tasks 11 and 14 are identical to tasks 3 and 6 in terms of their basic function. However, the root locus is designed for transfer function $G^*$ which is defined in Equation 2.18. Therefore, the inital root locus plot is produced, for complex number $s_2$, as seen in Figure 2.6. 
+Tasks 11 and 14 are identical to tasks 3 and 6 in terms of their basic function. However, the root locus is designed for transfer function $G^*$ which is defined in Equation 2.18. Therefore, the initial root locus plot is produced, for complex number $s_2$, as seen in Figure 2.6. 
 \begin{figure}[H]
     \caption{Root Locus Design for $G^*$.}
     \label{fig:task11_result}
@@ -563,7 +563,7 @@ Just as in task 3, the complex number does not lie on a branch for the root locu
     \centering
     \includegraphics[width=1.0\textwidth]{pictures/Auotpilot/Task14.jpg}
 \end{figure}
-This means that the final design has been completed for the altitude hold system. Therefore, the step response can be plotted in task 17. The following simulation shows the response, assuming the aircraft excperienced an altitude change of $50m$ due to the pitch change discussed in task 8. The step response can be seen in Figure 2.8.
+This means that the final design has been completed for the altitude hold system. Therefore, the step response can be plotted in task 17. The following simulation shows the response, assuming the aircraft experienced  an altitude change of $50m$ due to the pitch change discussed in task 8. The step response can be seen in Figure 2.8.
 \begin{figure}[H]
     \caption{Step Response of Altitude Hold System.}
     \label{fig:task17_result}
@@ -572,8 +572,13 @@ This means that the final design has been completed for the altitude hold system
 \end{figure}
 As seen in this step response, after 14.42 seconds, the aircraft has returned exactly to it's original height (the difference between the altitude change and final value is zero). There is a slight oscillation, as the aircraft initially over-corrects before returning to the original value. 
 \subsection{Discussion}
-\subsection{Conclusions}
-
+Before discussing the performance of the altitude hold system as a whole, its vitally important to mention the design steps, especially the root locus design. Primarily, this can bee seen in Tasks 3 and 6 for the inner loop and Tasks 11 and 14 for the outer loop, these relate to Figures 2.3, 2.4, 2.6 and 2.7 respectively. 
+These figures successfully show how a compensator can be identified by physically moving the root locus branch to lie up on the position of complex numbers $s_1$ and $s_2$ (Equation 2.8), which is determined based on two control parameters; the Damping Ratio and the Natural Frequency. Changing these parameters would result in an Altitude Hold system with a very different performance. 
+However, the most important results obtained are thanks to Tasks 8 and 17, which produce Figures 2.5 and 2.8 respectively. 
+First of all, the result from Figure 2.5 (Task 8) will be discussed. Figure 8 shows the step response for the pitch attitude system, namely the response of a system when a $5^{\degree}$ pitch change is experienced by the aircraft. The response successfully meets the design criteria as it responds in a fast (6.49 seconds) and stable (zero overshoot) manner. This is exactly what is required for a successful altitude hold system as the inner loop must respond quickly and efficiently to pitch commands, so that altitude corrections can be made in a timely manner. The correcting pitch angle has been determined as $17.8^{\degree}$ and once this is known, the autopilot systems can execute the correcting pitch motion, which will have an impact on the altitude of the aircraft. 
+Task 17 and Figure 2.8 discuss how the altitude changes due to this correcting pitch angle previously mentioned. The simulation has been run assuming a step change of 50m in height. The plot in Figure 2.8 successfully meets the design criteria as the aircraft responds in a safe manner, returning to the original altitude after 14.42 seconds. As discussed previously, the altitude response will be significantly slower than the pitch response, this is intentional to avoid excessive oscillations, which creates a more comfortable experience for passengers onboard an aircraft. There is however one oscillation, which can be seen both in the plot response, but also as the maximum overshoot is 9.10\%. This means that the aircraft initially over-corrects before returning to the original altitude. This likely occurs due to a time lag in the correcting the pitch angle once again to maintain the original altitude.     
+\subsection{Conclusions} 
+In summary, the design of the simple altitude hold system was successful. A mathematical model was created inside of the MATLAB environment and simulations were run to show how this model would handle sudden changes in pitch for an aircraft. This model of course offers a completely ideal simulation, assuming the aircraft's elevators and actuators are working perfectly and the aircraft only experiences one sudden change in pitch, not several small changes in quick succession. However, within the scope of this investigation the model performed as expected, matching up with all the requirements for an altitude hold system for aircraft.  
 \newpage
 \section{Appendix}
 \listoffigures
