@@ -19,6 +19,35 @@
 
 \refsection{0}
   \datalist[entry]{nyt/apasortcite//global/global}
+    \entry{ISL}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=acbce85dd43dbc5e0348fcf24f73ede2}{%
+           family={{ISL Products International Ltd.}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{fullhash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{bibnamehash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{authorbibnamehash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{authornamehash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{authorfullhash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-03-11}
+      \field{title}{5 Applications of DC Servo Motors: From CNC Machines to Laboratory Equipment}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://islproductsny.medium.com/5-applications-of-dc-servo-motors-from-cnc-machines-to-laboratory-equipment-faae8d427990
+      \endverb
+      \verb{url}
+      \verb https://islproductsny.medium.com/5-applications-of-dc-servo-motors-from-cnc-machines-to-laboratory-equipment-faae8d427990
+      \endverb
+    \endentry
     \entry{nasa2017}{misc}{}
       \name{author}{4}{}{%
         {{un=0,uniquepart=base,hash=9cc69c8d126af4675287333799115279}{%
@@ -71,6 +100,35 @@
     \endentry
   \enddatalist
   \datalist[entry]{nyt/global//global/global}
+    \entry{ISL}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=acbce85dd43dbc5e0348fcf24f73ede2}{%
+           family={{ISL Products International Ltd.}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{fullhash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{bibnamehash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{authorbibnamehash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{authornamehash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \strng{authorfullhash}{acbce85dd43dbc5e0348fcf24f73ede2}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2025-03-11}
+      \field{title}{5 Applications of DC Servo Motors: From CNC Machines to Laboratory Equipment}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://islproductsny.medium.com/5-applications-of-dc-servo-motors-from-cnc-machines-to-laboratory-equipment-faae8d427990
+      \endverb
+      \verb{url}
+      \verb https://islproductsny.medium.com/5-applications-of-dc-servo-motors-from-cnc-machines-to-laboratory-equipment-faae8d427990
+      \endverb
+    \endentry
     \entry{nasa2017}{misc}{}
       \name{author}{4}{}{%
         {{un=0,uniquepart=base,hash=9cc69c8d126af4675287333799115279}{%

@@ -9,7 +9,7 @@
 \course{Flight Systems E3}
 \professor{Professor T X Mei, Dr B A Sangolola, Dr Y Govdeli, Dr O K Ariff}
 \duedate{18/03/25}
-\abstract{Some abstract yada yada yada}
+\abstract{Some abstract yada yada yada Aaaaaaaaaaaaaaa}
 
 % Packages Required
 \usepackage{csquotes}
@@ -76,18 +76,341 @@
 \maketitle{} % Generates the title page
 
 \tableofcontents
-\vspace*{0.1cm}
-\noindent \hyperlink{page.54}{\textbf{References}} \hfill \textbf{NUMBER} % REMEMBER TO UPDATE THIS!!
 
 %%% Contents of report go here %%%
 \newpage
 \section{Digital Control Design Laboratory}
-Introduction
+DC Servos are very important pieces of equipment, that are used broadly across many industries, due to their wide range of applications. This is because
+\begin{enumerate}
+    \item They are very precise
+    \item They can be very finely controlled
+\end{enumerate}
+This means that DC Servos are used around the world from manufacturing equipment like CNC machines, where power and precision is key to ensure manufactured products meet specifications again and again (\cite{ISL}), to control surfaces on airliners, UAVs and jet fighters, where stability and control are vitally important. DC Servos will only be used more and more as technology improves and autonomous vehicles become more affordable and available to the general public. 
+This laboratory was carried out to investigate how DC Servos respond to an input, with different damping ratios and simulation times. MATLAB simulations were carried out to find proportional and derivative gains, before then applying them to a real DC servo to check how accurate the simulations were. 
 \subsection{Objectives, Theory, Apparatus}
+\subsubsection{Objectives}
+The objectives of this laboratory were:
+\begin{enumerate}
+    \item Identify the transfer function of the DC Servo,
+    \item Using root locus methodology, calculate gains to achieve closed loop systems for:
+    \begin {enumerate}
+        \item Digital-Proportional control of the DC Servo,
+        \item Digital-Proportional plus Derivative control of the DC servo,
+    \end {enumerate}
+    \item Use SIMULINK to evaluate the step response simulations of the root locus designs,
+    \item Compare the simulations with real DC Servo implementations.
+\end{enumerate}
+\subsubsection{Apparatus and Theory}
+The DC Servo used in the laboratory has a motor, where the position is measured using a potentiometer and the speed measured by a tachometer. A second potentiometer measures the output on a third shaft; all the shafts are connected via belt driven gears. The servo itself is driven by a PC, using a digital to analogue converter, whereas the output is connected via a analogue to digital converter. Via the PC, the control gains can be changed, therefore changing the performance of the DC Servo. 
+In this lab, the DC servo is first used to tune the MATLAB script, using an open-loop step response to find gain $k$ and time-constant $T$. Once values of proportional and derivative gains have been found using MATLAB, the DC Servo is then tuned with each of these values, to produce step responses, which can be compared with those produced by MATLAB.
 \subsection{Models and Results}
-\subsection{Discussion}
-\subsection{Conclusions}
+The laboratory has been broken down into 4 distinct steps:
+\begin{enumerate}
+    \item Step 1: find the values of $k$ and $T$ from the open loop DC Servo response. 
+    \item Step 2: DC Servo under Digital Proportional Control. 
+    \item Step 3: DC Servo under Digital Proportional-Derivative Control.
+    \item Step 4: Compare the simulated results with real DC Servo Trials.  
+\end{enumerate}
+The results from each of these steps will be presented, and then discussed in the following section, in turn. 
+\subsubsection{Step 1}
+To find the values of $k$ and $T$ the open loop response of the DC Servo was used. The response in question can be seen in Figure 1.1. 
+\begin{figure}[H]
+    \caption{Open Loop Response of the DC Servo.}
+    \label{fig:open_loop_response_DC_Servo}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task_1.png}
+\end{figure}
+Using this plot, values of $k$ and $T$ can be found using Equations 1.1 and 1.2. Where constants $a$, $b$, $c$ and $h$ are shown on Figure 1.1. 
+\begin{equation}
+    T = {{0.3c}\over{b}} \, ,
+\end{equation}
+\label{eq:1.1}
+\myequations{Equation to find $T$.}
+\begin{equation}
+    k = {{10h}\over{3a}} \, ,
+\end{equation}
+\label{eq:1.2}
+\myequations{Equation to find $k$.}
+Time-constant T is in seconds, whereas k is a value for gain. The terms $a$, $b$, $c$ and $h$ were all measured in mm. When measuring the values are:
+\begin{itemize}
+    \item $a=64$
+    \item $b=37$
+    \item $c=17$
+    \item $h=23$
+\end{itemize}
+Therefore, when applied to the equations for $k$ and $T$ the values obtained are:
+\begin{equation}
+    T = {{0.3\times17}\over{37}} = 0.1378  \, ,
+\end{equation}
+\label{eq:1.3}
+\myequations{The value of $T$.}
+\begin{equation}
+    k = {{10\times23}\over{3\times64}} = 1.12745 \, ,
+\end{equation}
+\label{eq:1.4}
+\myequations{The value of $k$.}
+Now that the values of $k$ and $T$ have been obtained, the MATLAB script can be tuned to have the same performance as the real DC Servo it aims to simulate. 
+\subsubsection{Step 2}
+Step 2 focuses on only Digital-Proportional control of a DC Servo. For this step, the MATLAB simulation is run 4 times, producing 4 sets of results with sampling Times ($T_s$) of:
+\begin{itemize}
+    \item 0.01s
+    \item 0.1s
+    \item 0.5s
+    \item 1.0s 
+\end{itemize}
+For each value of $T_s$ the following results are obtained:
+\begin{itemize}
+    \item An open-loop Transfer Function,
+    \item Two values of $K_p$ (Proportional Gain) one for a damping ratio ($\zeta$) of 0.6 and one for a value of 1,
+    \item Two root locus plots, one for each value of $\zeta$. 
+    \item Two unit step responses, one for each value of $\zeta$. 
+\end{itemize}
+Table 1.1 displays all the values of $K_p$ and $G_{ol}$ with varying damping ratio ($\zeta$) and sampling time $T_s$. 
+\begin{table}[H]
+    \centering
+    \caption{The values of Proportional Gain $K_p$ and $G_{ol}$ with varying Damping Ratio and Sampling Time.}
+    \label{tab:task2_gain_table}
+    \begin{tabular}{@{}cccl@{}}
+    \toprule
+    \multicolumn{1}{l}{}         & \textbf{Damping Ratio = 0.6} & \textbf{Damping Ratio = 1} & \multicolumn{1}{c}{\textbf{Transfer Function}}                    \\ \midrule
+    \textbf{Sampling Time $T_s$} & $K_p$                        & $K_p$                      & \multicolumn{1}{c}{$G_{ol}(z)$}                                      \\
+    0.01                         & 4.2518                       & 1.5801                     & ${{0.0003994 z + 0.0003898}\over{z^2-1.93z+0.93}}$      \\
+    0.1                          & 2.9833                       & 1.3470                     & ${{0.03258 z + 0.0256}\over{z^2 - 1.484 z + 0.484}}$    \\
+    0.5                          & 1.3548                       & 0.7494                     & ${{0.4125 z + 0.1363}\over{z^2 - 1.027 z + 0.02656}}$   \\
+    1.0                          & 0.8609                       & 0.4715                     & ${{0.9722 z + 0.1545}\over{z^2 - 1.001 z + 0.0007053}}$ \\ \bottomrule
+\end{tabular}
+\end{table}
+Its important to note that as the sampling time and damping ratio increases, the value of the proportional gain decreases. The same can be said for the poles of the transfer function. Each transfer function has a pole of 1, but the value of the additional pole decreases as the sampling time increases.
+The root locus plots for sampling time 0.01 can be found below in Figure 1.2 (damping ratio 0.6) and Figure 1.3 (damping ratio 1). 
+\begin{figure}[H]
+    \caption{$T_s = 0.01$: Root Locus Plot when the damping ratio is 0.6}
+    \label{fig:0.01_Ts_damping_0.6}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.01_damping_0.6.jpg}
+\end{figure}
+\begin{figure}[H]
+    \caption{$T_s = 0.01$: Root Locus Plot when the damping ratio is 1}
+    \label{fig:0.01_Ts_damping_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.01_damping_1.jpg}
+\end{figure}
+The root locus plots for sampling time 0.1 can be found below in Figure 1.4 (damping ratio 0.6) and Figure 1.5 (damping ratio 1). 
+\begin{figure}[H]
+    \caption{$T_s = 0.1$: Root Locus Plot when the damping ratio is 0.6}
+    \label{fig:0.1_Ts_damping_0.6}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.1_damping_0.6.jpg}
+\end{figure}
+\begin{figure}[H]
+    \caption{$T_s = 0.1$: Root Locus Plot when the damping ratio is 1}
+    \label{fig:0.1_Ts_damping_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.1_damping_1.jpg}
+\end{figure}
+The root locus plots for sampling time 0.5 can be found below in Figure 1.6 (damping ratio 0.6) and Figure 1.7 (damping ratio 1). 
+\begin{figure}[H]
+    \caption{$T_s = 0.5$: Root Locus Plot when the damping ratio is 0.6}
+    \label{fig:0.5_Ts_damping_0.6}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.5_damping_0.6.jpg}
+\end{figure}
+\begin{figure}[H]
+    \caption{$T_s = 0.5$: Root Locus Plot when the damping ratio is 1}
+    \label{fig:0.5_Ts_damping_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.5_damping_1.jpg}
+\end{figure}
+The root locus plots for sampling time 1.0 can be found below in Figure 1.8 (damping ratio 0.6) and Figure 1.9 (damping ratio 1). 
+\begin{figure}[H]
+    \caption{$T_s = 1.0$: Root Locus Plot when the damping ratio is 0.6}
+    \label{fig:1.0_Ts_damping_0.6}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_1.0_damping_0.6.jpg}
+\end{figure}
+\begin{figure}[H]
+    \caption{$T_s = 1.0$: Root Locus Plot when the damping ratio is 1}
+    \label{fig:1.0_Ts_damping_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_1.0_damping_1.jpg}
+\end{figure}
+Finally, now that the root locus design has been completed, the step responses for each sampling time and proportional gain can be produced. Figures 1.10 and 1.11 show the step response for gain 4.2518 and 1.1275 respectively. 
+\begin{figure}[H]
+    \caption{$T_s = 0.01$: Step Response when the gain is 4.2518}
+    \label{fig:0.01_Ts_step_response_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.01_step_response_1.jpg}
+\end{figure}
+This plot shows a response that has been underdamped slightly, due to the overshoot seen in the response.
+\begin{figure}[H]
+    \caption{$T_s = 0.01$: Step Response when the gain is 1.1275}
+    \label{fig:0.01_Ts_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.01_step_response_2.jpg}
+\end{figure}
+This plot shows a response that could be described as critically damped, as the response effectively returns to the original value. 
 
+Figures 1.12 and 1.13 show the step response for gain 2.9833 and 1.3470 respectively for a sampling time of 0.1 seconds.
+\begin{figure}[H]
+    \caption{$T_s = 0.1$: Step Response when the gain is 2.9833}
+    \label{fig:0.1_Ts_step_response_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.1_step_response_1.jpg}
+\end{figure}
+The longer sampling time has resulted in the blocky appearance of this response, although the general nature of the response is the same as in Figure 1.10.
+\begin{figure}[H]
+    \caption{$T_s = 0.1$: Step Response when the gain is 1.3470}
+    \label{fig:0.1_Ts_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.1_step_response_2.jpg}
+\end{figure}
+The longer sampling time has resulted in the blocky appearance of this response, although the general nature of the response is the same as in Figure 1.11.
+
+In fact, the same is true for sampling times of 0.5 and 1 seconds. The responses relating to 0.5 seconds can be seen in Figures 1.13 and 1.14 and the figures relating to 1.0 seconds can be seen in Figures 1.15 and 1.16.
+\begin{figure}[H]
+    \caption{$T_s = 0.5$: Step Response when the gain is 1.3548}
+    \label{fig:0.5_Ts_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.5_step_response_1.jpg}
+\end{figure}
+\begin{figure}[H]
+    \caption{$T_s = 0.5$: Step Response when the gain is 0.7494}
+    \label{fig:0.5_Ts_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_0.5_step_response_2.jpg}
+\end{figure}
+\begin{figure}[H]
+    \caption{$T_s = 1.0$: Step Response when the gain is 0.8609}
+    \label{fig:1.0_Ts_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_1.0_step_response_1.jpg}
+\end{figure}
+\begin{figure}[H]
+    \caption{$T_s = 1.0$: Step Response when the gain is 0.4715}
+    \label{fig:1.0_Ts_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task2_1.0_step_response_2.jpg}
+\end{figure}
+\subsubsection{Step 3}
+In step 3, the DC Servo's control is simulated using both Proportional and Derivative digital control for two different sampling times; 0.01 and 0.1 seconds. Step 3 produces the same set of results as step 2. Table 1.2 displays the values of $K_p$, $K_d$ and the transfer function $G_{ol}$ for the different settling times. Damping ratio ($\zeta$) remains constant at a value of 1 throughout. 
+\begin{table}[]
+    \centering
+    \caption{The values of Proportional Gain $K_p$ and Derivative Gain $K_d$ with the transfer function they produce $G_{ol}$. }
+    \label{tab:task2_gain_table}
+    \begin{tabular}{@{}cccc@{}}
+    \toprule
+    \textbf{Sampling Time} & \textbf{Proportional Gain} & \textbf{Derivative Gain} & \textbf{Transfer Function}                                                          \\ \midrule
+    \textbf{$T_s$}         & $K_p$                      & $K_d$                    & $G_{ol}$                                                                            \\
+    0.01                   & 5.7654                     & 0.1441                   & ${{1.398e-05 z^2 + 3.66e-06 z - 9.746e-06}\over{0.01 z^3 - 0.0193 z^2 + 0.0093 z}}$ \\
+    0.1                    & 3.6316                     & 0.0908                   & ${{0.004072 z^2 + 0.002386 z - 0.0006401}\over{0.1 z^3 - 0.1484 z^2 + 0.0484 z}}$  
+    \end{tabular}
+\end{table}
+The root locus plots for sampling times of 0.01 and 0.1 can be found below in Figures 1.18 and 1.19.
+\begin{figure}[H]
+    \caption{$T_s = 0.01$: Root Locus Plot of Derivative and Proportional Control}
+    \label{fig:0.01_Ts_step3_root_locus}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task3_0.01.jpg}
+\end{figure}
+\begin{figure}[H]
+    \caption{$T_s = 0.1$: Root Locus Plot of Derivative and Proportional Control}
+    \label{fig:0.1_Ts_step3_root_locus}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task3_0.1.jpg}
+\end{figure}
+Finally the step response plots of the simulation can be plotted for settling times of 0.01 and 0.1 seconds. They are found in Figures 1.20 and 1.21 respectively.
+\begin{figure}[H]
+    \caption{$T_s = 0.01$: Step Response of Derivative and Proportional Control}
+    \label{fig:0.01_Ts_step3_step_response}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task3_0.01_step_response.jpg}
+\end{figure}
+Figure 1.20 shows an overdamped response. It can be categorised as such because of the high maximum overshoot of the response and the small oscillation that occurs to return to its original value.
+\begin{figure}[H]
+    \caption{$T_s = 0.1$: Step Response of Derivative and Proportional Control}
+    \label{fig:0.1_Ts_step3_step_response}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task3_0.1_step_response.jpg}
+\end{figure}
+Figure 1.21 behaves in a similar fashion to the response in Figure 1.21. However, this response is more "blocky", which is due to the increased sampling time for this simulation.
+\subsubsection{Step 4}
+In step 4, the values of gains $K_p$ and $K_d$ obtained in the previous two steps were taken, and tuned into the real DC Servo rig, to produce step responses. The following eight figures (1.22 to 1.29) show the responses of the DC Servo when using only Digital-Proportional control. 
+\begin{figure}[H]
+    \caption{$T_s = 0.01$, $K_p = 4.2518$: Step Response of Proportional Control - Real DC Servo Rig}
+    \label{fig:0.01_Ts_step4_step_response_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_0.01_1}
+\end{figure}
+Figure 1.22 shows a response that is almost critically damped, with a very slight overshoot when returning to the original value.
+\begin{figure}[H]
+    \caption{$T_s = 0.01$, $K_p = 1.5801$: Step Response of Proportional Control - Real DC Servo Rig}
+    \label{fig:0.01_Ts_step4_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_0.01_2}
+\end{figure}
+Figure 1.23 shows a response that is critically damped, with no overshoot and a relatively small settling time.
+\begin{figure}[H]
+    \caption{$T_s = 0.1$, $K_p = 2.9833$: Step Response of Proportional Control - Real DC Servo Rig}
+    \label{fig:0.1_Ts_step4_step_response_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_0.1_1}
+\end{figure}
+Figure 1.24 shows an underdamped response. 
+\begin{figure}[H]
+    \caption{$T_s = 0.1$, $K_p = 1.3470$: Step Response of Proportional Control - Real DC Servo Rig}
+    \label{fig:0.1_Ts_step4_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_0.1_2}
+\end{figure}
+Figure 1.25 shows a response that is critically damped, but is slightly more damped compared to the response seen in Figure 1.23.
+\begin{figure}[H]
+    \caption{$T_s = 0.5$, $K_p = 1.3548$: Step Response of Proportional Control - Real DC Servo Rig}
+    \label{fig:0.5_Ts_step4_step_response_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_0.5_1}
+\end{figure}
+Figure 1.26 shows a response that is underdamped, the response is far more underdamped comapred with Figure 1.24.
+\begin{figure}[H]
+    \caption{$T_s = 0.5$, $K_p = 0.7494$: Step Response of Proportional Control - Real DC Servo Rig}
+    \label{fig:0.5_Ts_step4_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_0.5_2}
+\end{figure}
+Figure 1.27 shows a response that is overdamped.
+\begin{figure}[H]
+    \caption{$T_s = 1.0$, $K_p = 0.8609$: Step Response of Proportional Control - Real DC Servo Rig}
+    \label{fig:1.0_Ts_step4_step_response_1}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_1.0_1}
+\end{figure}
+Figure 1.28 shows a response that is very underdamped and has a very large oscillation before returning to the original value. 
+\begin{figure}[H]
+    \caption{$T_s = 1.0$, $K_p = 0.4715$: Step Response of Proportional Control - Real DC Servo Rig}
+    \label{fig:1.0_Ts_step4_step_response_2}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_1.0_2}
+\end{figure}
+Figure 1.29 shows a overdamped response, which has been damped more than the response in Figure 1.27.
+The following figures, Figures 1.30 (0.01 sample time) and 1.31 (0.1 sample time) will show the responses of the DC Servo rig when being controlled by Digital-Proportional-Derivative control. 
+\begin{figure}[H]
+    \caption{$T_s = 0.01$, $K_p = 5.7654$, $K_d = 0.1441$: Step Response of Derivative and Proportional Control - Real DC Servo Rig}
+    \label{fig:0.01_Ts_step4_step_response_1_PD}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_kd_1.jpg}
+\end{figure}
+Figure 1.30 shows a critically damped response.
+\begin{figure}[H]
+    \caption{$T_s = 0.1$, $K_p = 3.6316$, $K_d = 0.0908$: Step Response of Derivative and Proportional Control - Real DC Servo Rig}
+    \label{fig:0.01_Ts_step4_step_response_2_PD}
+    \centering
+    \includegraphics[width=1.1\textwidth]{pictures/task4_kp_kd_2.jpg}
+\end{figure}
+Figure 1.31 shows a slightly underdamped response.
+\subsection{Discussion}
+In order for the 4 steps which produced results to be accurate, step 1 has to be completed to a high degree of accuracy. The values for $a$, $b$, $c$ and $h$ were all measured with a cm ruler, with lines drawn on in sharp pencil. Since the measurements are all in mm, each measurement has an accuracy of $\pm 0.05$mm. Any error in this stage could prove to be catastrophic for the accuracy of the whole laboratory. Therefore, the average value was taken of multiple investigators who conducted this same procedure. This makes the values of $k$ and $T$ more accurate. 
+Most of the values of $K_p$ estimated on root locus plots in step 2 and 3 were similar (to 2 decimal places) to the values produced by the script itself, and can be seen in Table 1.1 and 1.2. Overall, this suggests there is a good deal of accuracy for the mathematical model produced by the script and the Transfer Functions $G_{ol}$ that it calculates.
+For small sample times (0.01 seconds), the step responses are incredibly similar for those produced by the MATLAB script and the real DC Servo rig. However, as the sample time increases, the plots become increasingly "blocky" when produced by MATLAB, however they remain smooth for the real DC Servo rig. Yet, on the real DC Servo responses, there is an increasing number of anomalous readings as the sample size increases. There are no such readings on the sample sizes of 0.01 seconds. This suggests that the DC Servo rig smooths out the response to act over the whole sample time, which in turn produces more erroneous readings. However, the MATLAB simulation produces a more "ideal" response, jumping from output to output, without smoothing over the curve. This makes sense as a real DC Servo rig has to move a physical shaft to produce a response, the simulation does not account for this.   
+\subsection{Conclusions}
+To conclude, the laboratory was completed successfully by simulating the DC Servo rig within MATLAB and then comparing the results produced with a real DC servo rig. The MATLAB model was proven to be internally consistent as gains produced by the graphs and by mathematics matched up. Furthermore, the overall step responses were very similar for small sample times. However, as the sample time increases, there was a clear difference in the performance of the DC Servo rig and the MATLAB script, which can be explained thanks to the knowledge of how a DC Servo operates  and functions. 
 \newpage
 \section{Altitude Hold Autopilot Design}
 Both safety and efficiency have been significantly improved thanks to the introduction of autopilot systems, which have become an essential aspect of modern aviation. Initially, autopilots were introduced to reduce the flight crew’s workload during long-haul flights but over time they have evolved into highly sophisticated systems, which are capable of completing various complex tasks autonomously. One of the different functionalities of autopilots is altitude hold. This feature is of paramount importance for safety and efficiency, as it ensures a steady and controlled flight path is followed, this means that the desired cruising altitude is maintained. Any deviation in the desired cruising altitude could result in serious safety concerns, the aircraft could come into conflict, and cause fuel inefficiencies, thus reducing profit margins for airlines. \newline
@@ -581,12 +904,49 @@ Task 17 and Figure 2.8 discuss how the altitude changes due to this correcting p
 In summary, the design of the simple altitude hold system was successful. A mathematical model was created inside of the MATLAB environment and simulations were run to show how this model would handle sudden changes in pitch for an aircraft. This model of course offers a completely ideal simulation, assuming the aircraft's elevators and actuators are working perfectly and the aircraft only experiences one sudden change in pitch, not several small changes in quick succession. However, within the scope of this investigation the model performed as expected, matching up with all the requirements for an altitude hold system for aircraft.  
 \newpage
 \section{Appendix}
+\addcontentsline{toc}{subsection}{List of Figures}
 \listoffigures
+\addcontentsline{toc}{subsection}{List of Tables}
 \listoftables
+\addcontentsline{toc}{subsection}{List of Equations}
 \listofmyequations
 
-\newpage
+\addcontentsline{toc}{subsection}{Autopilot Script Output}
+\textbf{Autopilot Script Output}
+\begin{lstlisting}[language=MATLAB]
+The phase of G2 at s1 is: 3.1416 radians
+The angle criterion has been satisfied for G2 at s1 - the phase is approximately pi.
+The poles of G_theta_c are:
+  -1.5000 + 2.5981i
+  -1.5000 - 2.5981i
+  -2.3867 + 0.0000i
+  -0.5226 + 0.0000i
 
+The zeros of G_theta_c are:
+   -0.8667
+
+The phase of G3 at s2 is: 3.1416 radians
+The angle criterion has been satisfied for G3 at s2 - the phase is approximately pi.
+The poles of G_altitude are:
+  -9.9994 + 0.0000i
+  -1.5453 + 2.6332i
+  -1.5453 - 2.6332i
+  -2.6391 + 0.0000i
+  -0.9830 + 0.0000i
+  -0.8667 + 0.0000i
+  -0.2653 + 0.3325i
+  -0.2653 - 0.3325i
+
+The zeros of G_altitude are:
+   13.2767
+  -14.3131
+  -10.0000
+   -0.8667
+   -0.7437
+\end{lstlisting}
+
+\newpage
+\addcontentsline{toc}{subsection}{References}
 \printbibliography
 
 \end{document}
