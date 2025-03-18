@@ -9,7 +9,7 @@
 \course{Flight Systems E3}
 \professor{Professor T X Mei, Dr B A Sangolola, Dr Y Govdeli, Dr O K Ariff}
 \duedate{18/03/25}
-\abstract{Some abstract yada yada yada Aaaaaaaaaaaaaaa}
+\abstract{This report consists of two distinct elements. Part 1 discusses the DC Servo Laboratory, which aims to investigate the impact of Proportional and Proportional-Derivative Control on a DC Servo rig while also simulating the results via MATLAB. Part 2 discusses the design of a simple altitude hold system, which was also completed via MATLAB. Both parts proved to be successful as they produced meaningful results, which not only were internally consistent, but also consistent with the known theory of the subjects at hand. While Part 1 focuses more on theoretical and mathematical design of control systems, Part 2 is heavily invested in the mathematical representation of control systems in computer coding (in this case MATLAB). The MATLAB code developed is available within the body of this report as well as significant explanation of how it functions. The step responses produced in Part 1 are heavily compared with one another to understand how a real DC Servo operates vs a simulated version. The lessons applied here would be very applicable to the Autopilot design in Part 2 if further study were to be completed.}
 
 % Packages Required
 \usepackage{csquotes}
@@ -633,213 +633,201 @@ The mathematical modelling of the altitude hold system was completed inside of a
 Storing the variables in a different script provides a great deal of flexibility, as changing one line of code will enable the user to simulate the autopilot hold system in different conditions, without having to manually change each aerodynamic and control derivative. Variable files are stored in the following format:
 
 \begin{lstlisting}[language=MATLAB]
-%%% Stability and Control Derivatives %%%
-function [Xu, Zu, Mu, Xw, Zw, Mw, Xw_dot, Zw_dot, Mw_dot, Xq, Zq, Mq, Xeta, Zeta, Meta, VR, g] = final_assignment_variables()
-    Xu = -1.58E-02;    Zu = -1.442E-01;    Mu = -1.3442E-04;
-    Xw_dot = 0;        Zw_dot = -2.2E-03;  Mw_dot = -2.0483E-04;
-    Xw = 3.79E-03;     Zw = -8.73E-01;     Mw = -6.0107E-03;
-    Xq = 0;            Zq = 0;             Mq = -9.88E-01;
-    Xeta = 0;          Zeta = -1.2408E+01;  Meta = -1.153E+01;
+    %%% Workspace Cleanup %%%
+    clc;
+    clear;
+    close all;
     
-    VR = 236; g = 9.8100;
-end
-%%% END OF VARIABLES %%%
-\end{lstlisting}
-
-The main substance of the Autopilot script has been broken down into 17 steps, each aiming to accomplish a specific design goal. The MATLAB code is as follows:
-\begin{lstlisting}[language=MATLAB]
-%%% Workspace Cleanup %%%
-clc;
-clear;
-close all;
-
-s = tf('s');
-%%% Stability and Control Derivatives and Flight Condition %%%
-[Xu, Zu, Mu, Xw, Zw, Mw, Xw_dot, Zw_dot, Mw_dot, Xq, Zq, Mq, Xeta, Zeta, Meta, VR, g] = final_assignment_variables(); % Change the name of this function to to run this system with different variable values.
-
-%%% Actuator and Altimeter Dynamics %%%
-G_etaA_eta = -4/(s+4);
-G_etaA_eta_Numerator = cell2mat(G_etaA_eta.Numerator); % Gets numerator in appropriate form for Simulink
-G_etaA_eta_Denominator = cell2mat(G_etaA_eta.Denominator); % Gets denominator in appropriate form for Simulink
-G_alt = 10/(s+10);
-G_alt_Numerator = cell2mat(G_alt.Numerator);
-G_alt_Denominator = cell2mat(G_alt.Denominator);
-
-%%% Transfer Functions - TASK 1 %%% 
-G_eta_q = ((Meta + (Mw_dot*Zeta))*s + ((Mw*Zeta) - (Meta*Zw)) )/((s^2) - ((VR*Mw_dot) + Zw + Mq)*s +((Mq*Zw) - (VR*Mw)));
-G_eta_q_Numerator = cell2mat(G_eta_q.Numerator); % Gets numerator in appropriate form for Simulink
-G_eta_q_Denominator = cell2mat(G_eta_q.Denominator); % Gets denominator in appropriate form for Simulink
-G_eta_theta = 1/s * G_eta_q;
-G_theta_h = 1/s * ((-Zeta*(s^2))+ Zeta*s*(Mq+VR*Mw_dot) + VR*(Mw*Zeta-Meta*Zw))/(s*(Meta+Mw_dot*Zeta) + (Mw*Zeta-Meta*Zw));
-Gp = G_etaA_eta*G_eta_q;
-G1 = Gp/s;
-
-%%% Root Locus Design for Pitch Control - TASK 2 %%%
-Wn = 3;
-zeta = 0.5;
-sigma = zeta*Wn;
-Wd = Wn*sqrt(1-zeta^2);
-s1 = -sigma + 1i * Wd;
-
-%%% Plot The Root Locus for Pitch Control - TASK 3 %%%
-figure;
-rlocus(G1)
-hold on;
-plot(real(s1), imag(s1), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
-title('Root Locus of G1(s) - Pitch Control');
-grid off;
-
-%%% Evaluating the Complex Number of G1 - TASK 4 %%%
-G1_s1 = evalfr(G1, s1);
-mag_G1_s1 = abs(G1_s1);
-angle_G1_s1 = angle(G1_s1);
-
-%%% Find the location of the compensating Zero - TASK 5 %%%
-alpha_c = pi - angle_G1_s1;
-a = sigma + Wd / tan(alpha_c); % Finds the zero location, a, by accounting for the phase shortfall at point s1. 
-
-%%% Define G2 and show the point s1 on it's Root Locus Plot - TASK 6 %%%
-G2 = (s+a)*G1;
-G2_s1 = evalfr(G2, s1);
-angle_G2_s1 = angle(G2_s1); % May output a value close to, but not exactly pi - the criterion should still be met.
-fprintf('The phase of G2 at s1 is: %.4f radians\n', abs(angle_G2_s1));
-figure;
-rlocus(G2);
-hold on;
-plot(real(s1), imag(s1), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
-title('Root Locus of G2(s) - Pitch Control');
-grid off;
-
-%%% Check to see if the angle criterion is satisfied %%%
-if abs(abs(angle_G2_s1) - pi) < 1e-3
-    disp('The angle criterion has been satisfied for G2 at s1 - the phase is approximately pi.');
-else
-    disp('The angle criterion has not been satisfied.');
-end
-
-%%% Calculating the Gains - TASK 7 %%%
-Kq = 1/(abs(G2_s1)); % Kq*mag_G1_s1 = 1. This satisfies the magnitude condition at s1. This means the CL pole will be at s1. 
-Ktheta = a*Kq; % Therefore, Krg = Kq.
-
-%%% Determine the CLTF and find the Zeros and Poles - TASK 8 %%%
-G_theta_c = feedback(G1,Kq*(s+a));
-
-info = stepinfo(G_theta_c*5); % Gets the properties from the CLTF with a step change of 5 degrees.
-overshoot = info.Overshoot;       % Percentage overshoot of CLTF
-settlingTime = info.SettlingTime;   % Settling time in seconds of CLTF
-finalValue = dcgain(G_theta_c*5);      % Final value of CLTF
-
-figure;
-[response, time] = step(G_theta_c*5);
-plot(time, response, 'LineWidth',2);
-
-[maxVal, maxIdx] = max(response); 
-maxTime = time(maxIdx); % Find the maximum response value and its time
-
-grid on;
-title('Step Response of Pitch Attitude Control - Pitch Control');
-
-annotationStr = sprintf('Maximum Overshoot: %.2f%%\nSettling Time: %.2f s\nFinal Value: %.2f', overshoot, settlingTime, finalValue); % Creates the annotation text with variable placeholders.
-
-annotation('textbox', [0.3, 0.3, 0.3, 0.2], 'String', annotationStr, 'FitBoxToText', 'on', 'BackgroundColor', '#ADD8E6', 'EdgeColor', 'black', 'FontSize', 50); % Creates the annotation with a text box.
-
-pole_G_altitude = pole(G_theta_c);
-zero_G_altitude = zero(G_theta_c);
-disp('The poles of G_theta_c are:');
-disp(pole_G_altitude);
-disp('The zeros of G_theta_c are:');
-disp(zero_G_altitude);
-
-%%% Define Altitude Loop Transfer Functions - TASK 9 %%%
-a_c = 0.75;
-G_prime = (1 / (1 + a_c*s)) * G_theta_c * G_theta_h; 
-G_star = G_prime * G_alt;
-
-%%% Root Locus Design for Altitude Control - TASK 10 %%%
-Wn_2 = 0.5;
-zeta_2 = 0.5;
-sigma_2 = zeta_2*Wn_2;
-Wd_2 = Wn_2*sqrt(1-zeta_2^2);
-s2 = -sigma_2 + 1i * Wd_2;
-
-%%% Plot the Root Locus for Altitude Control - TASK 11 %%%
-figure;
-rlocus(G_star);
-hold on;
-plot(real(s2), imag(s2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
-title('Root Locus of G*(s) - Altitude Control');
-grid off;
-
-%%% Evaluating the Complex Number of G_star - TASK 12 %%%
-G_star_s2 = evalfr(G_star, s2);
-mag_G_star_s2 = abs(G_star_s2);
-angle_G_star_s2 = angle(G_star_s2);
-
-%%% Compute Zero Location for Altitude Control - TASK 13 %%%
-alpha_c_prime = pi - angle_G_star_s2;
-b1 = sigma_2 + Wd_2 / tan(alpha_c_prime);
-
-%%% Define G3(s) and Root Locus Plot for Altitude Control - TASK 14 %%%
-G3 = (s + b1) * G_star;
-G3_s2 = evalfr(G3, s2);
-angle_G3_s2 = angle(G3_s2);
-fprintf('The phase of G3 at s2 is: %.4f radians\n', abs(angle_G3_s2));
-figure;
-rlocus(G3);
-hold on;
-plot(real(s2), imag(s2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
-title('Root Locus of G3(s) - Altitude Control');
-grid off;
-
-%%% Check to see if the angle criterion is satisfied %%%
-if abs(abs(angle_G3_s2) - pi) < 1e-3
-    disp('The angle criterion has been satisfied for G3 at s2 - the phase is approximately pi.');
-else
-    disp('The angle criterion has not been satisfied.');
-end
-
-%%% Calculate the gain Kh_prime - TASK 15 %%%
-kh_prime = 1/abs(G3_s2);
-
-%%% Calculate the gain Kh - TASK 16 %%%
-kh = kh_prime * b1;
-
-%%% Compute Closed Loop Transfer Function - TASK 17 %%%
-G_altitude = feedback(kh*(s+b1)*G_prime, G_alt);
-
-info_2 = stepinfo(50 * G_altitude); % Gets the properties from the CLTF with a step change of 5 degrees.
-overshoot_2 = info_2.Overshoot;       % Percentage overshoot of CLTF
-settlingTime_2 = info_2.SettlingTime;   % Settling time in seconds of CLTF
-finalValue_2 = dcgain(G_altitude*50);      % Final value of CLTF
-
-figure;
-[response_2, time_2] = step(50 * G_altitude);
-plot(time_2, response_2, 'LineWidth',2);
-
-[maxVal_2, maxIdx_2] = max(response); 
-maxTime_2 = time(maxIdx_2); % Find the maximum response value and its time
-
-title('Step Response of Altitude Hold System - Altitude Control');
-grid on;
-
-annotationStr_2 = sprintf('Maximum Overshoot: %.2f%%\nSettling Time: %.2f s\nFinal Value: %.2f', overshoot_2, settlingTime_2, finalValue_2); % Creates the annotation text with variable placeholders.
-
-annotation('textbox', [0.3, 0.3, 0.3, 0.2], 'String', annotationStr_2, 'FitBoxToText', 'on', 'BackgroundColor', '#ADD8E6', 'EdgeColor', 'black', 'FontSize', 50); % Creates the annotation with a text box.
-
-pole_G_altitude = pole(G_altitude);
-zero_G_altitude = zero(G_altitude);
-disp('The poles of G_altitude are:');
-disp(pole_G_altitude);
-disp('The zeros of G_altitude are:');
-disp(zero_G_altitude);
-
-%%% Get the compensator and G_prime block for Simulink %%%
-
-overallBlock = G_prime * kh_prime*(s+b1);
-overallBlock_Numerator = cell2mat(overallBlock.Numerator);
-overallBlock_Denominator = cell2mat(overallBlock.Denominator);
-
-%%% END OF SCRIPT %%%
+    s = tf('s');
+    %%% Stability and Control Derivatives and Flight Condition %%%
+    [Xu, Zu, Mu, Xw, Zw, Mw, Xw_dot, Zw_dot, Mw_dot, Xq, Zq, Mq, Xeta, Zeta, Meta, VR, g] = final_assignment_variables(); % Change the name of this function to to run this system with different variable values.
+    
+    %%% Actuator and Altimeter Dynamics %%%
+    G_etaA_eta = -4/(s+4);
+    G_etaA_eta_Numerator = cell2mat(G_etaA_eta.Numerator); % Gets numerator in appropriate form for Simulink
+    G_etaA_eta_Denominator = cell2mat(G_etaA_eta.Denominator); % Gets denominator in appropriate form for Simulink
+    G_alt = 10/(s+10);
+    G_alt_Numerator = cell2mat(G_alt.Numerator); % Code relevant to SIMULINK
+    G_alt_Denominator = cell2mat(G_alt.Denominator); % Code relevant to SIMULINK
+    
+    %%% Transfer Functions - TASK 1 %%% 
+    G_eta_q = ((Meta + (Mw_dot*Zeta))*s + ((Mw*Zeta) - (Meta*Zw)) )/((s^2) - ((VR*Mw_dot) + Zw + Mq)*s +((Mq*Zw) - (VR*Mw)));
+    G_eta_q_Numerator = cell2mat(G_eta_q.Numerator); % Gets numerator in appropriate form for Simulink
+    G_eta_q_Denominator = cell2mat(G_eta_q.Denominator); % Gets denominator in appropriate form for Simulink
+    G_eta_theta = 1/s * G_eta_q;
+    G_theta_h = 1/s * ((-Zeta*(s^2))+ Zeta*s*(Mq+VR*Mw_dot) + VR*(Mw*Zeta-Meta*Zw))/(s*(Meta+Mw_dot*Zeta) + (Mw*Zeta-Meta*Zw));
+    Gp = G_etaA_eta*G_eta_q;
+    G1 = Gp/s;
+    
+    %%% Root Locus Design for Pitch Control - TASK 2 %%%
+    Wn = 3; % Specified in brief
+    zeta = 0.5; % Specified in brief
+    sigma = zeta*Wn;
+    Wd = Wn*sqrt(1-zeta^2);
+    s1 = -sigma + 1i * Wd; % Complex number s1 is designed based on parameters decided in the brief. This complex is used as a design goal for G2
+    
+    %%% Plot The Root Locus for Pitch Control - TASK 3 %%%
+    figure;
+    rlocus(G1)
+    hold on;
+    plot(real(s1), imag(s1), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+    title('Root Locus of G1(s) - Pitch Control');
+    grid off;
+    
+    %%% Evaluating the Complex Number of G1 - TASK 4 %%%
+    G1_s1 = evalfr(G1, s1);
+    mag_G1_s1 = abs(G1_s1);
+    angle_G1_s1 = angle(G1_s1);
+    
+    %%% Find the location of the compensating Zero - TASK 5 %%%
+    alpha_c = pi - angle_G1_s1;
+    a = sigma + Wd / tan(alpha_c); % Finds the zero location, a, by accounting for the phase shortfall at point s1. 
+    % The goal of this step is to move the root locus branch to co-inside with
+    % the complex number s1. "a" is a constant determined which wil be
+    % multiplied by G1 to achieve this.
+    
+    %%% Define G2 and show the point s1 on it's Root Locus Plot - TASK 6 %%%
+    G2 = (s+a)*G1;
+    G2_s1 = evalfr(G2, s1);
+    angle_G2_s1 = angle(G2_s1); % May output a value close to, but not exactly pi - the criterion should still be met.
+    fprintf('The phase of G2 at s1 is: %.4f radians\n', abs(angle_G2_s1));
+    figure;
+    rlocus(G2);
+    hold on;
+    plot(real(s1), imag(s1), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+    title('Root Locus of G2(s) - Pitch Control');
+    grid off;
+    
+    %%% Check to see if the angle criterion is satisfied %%%
+    if abs(abs(angle_G2_s1) - pi) < 1e-3
+        disp('The angle criterion has been satisfied for G2 at s1 - the phase is approximately pi.');
+    else
+        disp('The angle criterion has not been satisfied.');
+    end
+    
+    %%% Calculating the Gains - TASK 7 %%%
+    Kq = 1/(abs(G2_s1)); % Kq*mag_G1_s1 = 1. This satisfies the magnitude condition at s1. This means the CL pole will be at s1. 
+    Ktheta = a*Kq; % Therefore, Krg = Kq.
+    
+    %%% Determine the CLTF and find the Zeros and Poles - TASK 8 %%%
+    G_theta_c = feedback(G1,Kq*(s+a));
+    
+    info = stepinfo(G_theta_c*5); % Gets the properties from the CLTF with a step change of 5 degrees.
+    overshoot = info.Overshoot;       % Percentage overshoot of CLTF
+    settlingTime = info.SettlingTime;   % Settling time in seconds of CLTF
+    finalValue = dcgain(G_theta_c*5);      % Final value of CLTF
+    
+    figure;
+    [response, time] = step(G_theta_c*5);
+    plot(time, response, 'LineWidth',2);
+    
+    [maxVal, maxIdx] = max(response); 
+    maxTime = time(maxIdx); % Find the maximum response value and its time
+    
+    grid on;
+    title('Step Response of Pitch Attitude Control - Pitch Control');
+    
+    annotationStr = sprintf('Maximum Overshoot: %.2f%%\nSettling Time: %.2f s\nFinal Value: %.2f', overshoot, settlingTime, finalValue); % Creates the annotation text with variable placeholders.
+    
+    annotation('textbox', [0.3, 0.3, 0.3, 0.2], 'String', annotationStr, 'FitBoxToText', 'on', 'BackgroundColor', '#ADD8E6', 'EdgeColor', 'black', 'FontSize', 50); % Creates the annotation with a text box.
+    
+    pole_G_altitude = pole(G_theta_c);
+    zero_G_altitude = zero(G_theta_c);
+    disp('The poles of G_theta_c are:');
+    disp(pole_G_altitude);
+    disp('The zeros of G_theta_c are:');
+    disp(zero_G_altitude);
+    
+    %%% Define Altitude Loop Transfer Functions - TASK 9 %%%
+    a_c = 0.75;
+    G_prime = (1 / (1 + a_c*s)) * G_theta_c * G_theta_h; 
+    G_star = G_prime * G_alt;
+    
+    %%% Root Locus Design for Altitude Control - TASK 10 %%%
+    Wn_2 = 0.5;
+    zeta_2 = 0.5;
+    sigma_2 = zeta_2*Wn_2;
+    Wd_2 = Wn_2*sqrt(1-zeta_2^2);
+    s2 = -sigma_2 + 1i * Wd_2;
+    
+    %%% Plot the Root Locus for Altitude Control - TASK 11 %%%
+    figure;
+    rlocus(G_star);
+    hold on;
+    plot(real(s2), imag(s2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+    title('Root Locus of G*(s) - Altitude Control');
+    grid off;
+    
+    %%% Evaluating the Complex Number of G_star - TASK 12 %%%
+    G_star_s2 = evalfr(G_star, s2);
+    mag_G_star_s2 = abs(G_star_s2);
+    angle_G_star_s2 = angle(G_star_s2);
+    
+    %%% Compute Zero Location for Altitude Control - TASK 13 %%%
+    alpha_c_prime = pi - angle_G_star_s2;
+    b1 = sigma_2 + Wd_2 / tan(alpha_c_prime);
+    
+    %%% Define G3(s) and Root Locus Plot for Altitude Control - TASK 14 %%%
+    G3 = (s + b1) * G_star;
+    G3_s2 = evalfr(G3, s2);
+    angle_G3_s2 = angle(G3_s2);
+    fprintf('The phase of G3 at s2 is: %.4f radians\n', abs(angle_G3_s2));
+    figure;
+    rlocus(G3);
+    hold on;
+    plot(real(s2), imag(s2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+    title('Root Locus of G3(s) - Altitude Control');
+    grid off;
+    
+    %%% Check to see if the angle criterion is satisfied %%%
+    if abs(abs(angle_G3_s2) - pi) < 1e-3
+        disp('The angle criterion has been satisfied for G3 at s2 - the phase is approximately pi.');
+    else
+        disp('The angle criterion has not been satisfied.');
+    end
+    
+    %%% Calculate the gain Kh_prime - TASK 15 %%%
+    kh_prime = 1/abs(G3_s2);
+    
+    %%% Calculate the gain Kh - TASK 16 %%%
+    kh = kh_prime * b1;
+    
+    %%% Compute Closed Loop Transfer Function - TASK 17 %%%
+    G_altitude = feedback(kh*(s+b1)*G_prime, G_alt);
+    
+    info_2 = stepinfo(50 * G_altitude); % Gets the properties from the CLTF with a step change of 5 degrees.
+    overshoot_2 = info_2.Overshoot;       % Percentage overshoot of CLTF
+    settlingTime_2 = info_2.SettlingTime;   % Settling time in seconds of CLTF
+    finalValue_2 = dcgain(G_altitude*50);      % Final value of CLTF
+    
+    figure;
+    [response_2, time_2] = step(50 * G_altitude);
+    plot(time_2, response_2, 'LineWidth',2);
+    
+    [maxVal_2, maxIdx_2] = max(response); 
+    maxTime_2 = time(maxIdx_2); % Find the maximum response value and its time
+    
+    title('Step Response of Altitude Hold System - Altitude Control');
+    grid on;
+    
+    annotationStr_2 = sprintf('Maximum Overshoot: %.2f%%\nSettling Time: %.2f s\nFinal Value: %.2f', overshoot_2, settlingTime_2, finalValue_2); % Creates the annotation text with variable placeholders.
+    
+    annotation('textbox', [0.3, 0.3, 0.3, 0.2], 'String', annotationStr_2, 'FitBoxToText', 'on', 'BackgroundColor', '#ADD8E6', 'EdgeColor', 'black', 'FontSize', 50); % Creates the annotation with a text box.
+    
+    pole_G_altitude = pole(G_altitude);
+    zero_G_altitude = zero(G_altitude);
+    disp('The poles of G_altitude are:');
+    disp(pole_G_altitude);
+    disp('The zeros of G_altitude are:');
+    disp(zero_G_altitude);
+    
+    %%% Get the compensator and G_prime block for Simulink %%%
+    
+    overallBlock = G_prime * kh_prime*(s+b1);
+    overallBlock_Numerator = cell2mat(overallBlock.Numerator);
+    overallBlock_Denominator = cell2mat(overallBlock.Denominator);
+    
+    %%% END OF SCRIPT %%%
 \end{lstlisting}
 
 Originally, a requirement for this assignment was to also complete separate simulations inside of SIMULINK, but this element of the assessment has been subsequently removed. All the code relating to this part of the assessment remains in the script above. 
